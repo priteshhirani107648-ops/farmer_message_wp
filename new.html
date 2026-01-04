@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>નીલકંઠ ફ્રૂટ એન્ડ વેજીટેબલ</title>
+
+<style>
+:root{
+  --green:#1f7a3f;
+  --green-light:#e9f6ef;
+  --bg:#f4f6f8;
+  --card:#ffffff;
+  --text:#1f2937;
+  --muted:#6b7280;
+  --danger:#c53030;
+  --radius:16px;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,"Segoe UI",Arial;
+  background:var(--bg);
+  color:var(--text);
+}
+.app{
+  max-width:560px;
+  margin:auto;
+  padding:14px;
+}
+.header{text-align:center;padding:14px 0}
+.header h1{margin:0;font-size:22px;font-weight:800}
+.header p{margin-top:6px;font-size:13px;color:var(--muted)}
+
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  padding:16px;
+  margin-top:14px;
+  box-shadow:0 10px 22px rgba(0,0,0,.06);
+}
+label{font-size:14px;font-weight:700;margin-bottom:6px;display:block}
+input,select,textarea,button{
+  width:100%;
+  padding:10px;
+  font-size:14px;
+  border-radius:10px;
+  border:1px solid #d1d5db;
+}
+textarea{min-height:240px;resize:none;background:#fafafa}
+
+.mode{display:flex;gap:8px}
+.mode button{flex:1;background:#f3f4f6;font-weight:700}
+.mode .active{background:var(--green);color:#fff}
+
+.row{display:grid;gap:6px;margin-top:8px}
+.row.normal{grid-template-columns:1.4fr 1fr 1fr 1fr}
+.row.advanced{grid-template-columns:1.4fr 1fr 1fr}
+.row.buyer{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr 1fr}
+
+.header-row{
+  display:grid;
+  grid-template-columns:1.4fr 1fr 1fr 1fr 1fr 1fr;
+  gap:6px;
+  font-size:12px;
+  font-weight:700;
+  color:var(--muted);
+  margin-top:10px;
+}
+
+.hidden{display:none}
+.other{display:none}
+
+.btn{border:none;font-weight:700;margin-top:12px}
+.btn-add{background:var(--green-light);color:var(--green)}
+.btn-gen{background:var(--green);color:#fff}
+.btn-wa{background:#dcfce7;color:#166534}
+.btn-copy{background:#eef2ff;color:#1d4ed8}
+.btn-clear{background:#fff3f3;color:var(--danger)}
+
+.footer{
+  text-align:center;
+  font-size:12px;
+  color:var(--muted);
+  margin:22px 0 8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+<div class="header">
+  <h1>🥦 નીલકંઠ ફ્રૂટ એન્ડ વેજીટેબલ</h1>
+  <p>ભાવ • બિલ • ખરીદદાર • WhatsApp</p>
+</div>
+
+<!-- MODE -->
+<div class="card">
+<label>મોડ પસંદ કરો</label>
+<div class="mode">
+  <button id="mNormal" class="active" onclick="setMode('normal')">🟢 Normal</button>
+  <button id="mAdv" onclick="setMode('advanced')">🔵 Advanced</button>
+  <button id="mBuyer" onclick="setMode('buyer')">🔴 Buyer</button>
+</div>
+</div>
+
+<!-- FARMER -->
+<div id="farmerSection" class="card">
+<label>ખેડૂત</label>
+<select id="farmerSelect" onchange="toggleFarmerOther()">
+  <option value="">ખેડૂત પસંદ કરો</option>
+  <option>JK Hirani</option>
+  <option>Bhumi</option>
+  <option>Kumud</option>
+  <option>Dharmin</option>
+  <option>Shreeji Farm</option>
+  <option>HMV</option>
+  <option value="OTHER">અન્ય</option>
+</select>
+<input id="farmerOther" class="other" placeholder="ખેડૂતનું નામ લખો">
+</div>
+
+<!-- SELLER -->
+<div id="sellerSection" class="card">
+<label>શાક / ભાવ</label>
+<div id="sellerItems"></div>
+<button class="btn btn-add" onclick="addSellerItem()">➕ વધુ ઉમેરો</button>
+</div>
+
+<!-- BUYER -->
+<div id="buyerSection" class="card hidden">
+<label>ખરીદદાર</label>
+<select id="buyerSelect" onchange="toggleBuyerOther()">
+  <option value="">ખરીદદાર પસંદ કરો</option>
+  <option>Mohan</option>
+  <option>Mansoor</option>
+  <option>Ramesh</option>
+  <option value="OTHER">અન્ય</option>
+</select>
+<input id="buyerOther" class="other" placeholder="ખરીદદારનું નામ લખો">
+
+<div class="header-row">
+  <div>શાક</div><div>બોક્સ</div><div>વજન</div>
+  <div>ભાવ</div><div>કમિશન %</div><div>મજૂરી ₹</div>
+</div>
+
+<div id="buyerItems"></div>
+<button class="btn btn-add" onclick="addBuyerItem()">➕ આઇટમ ઉમેરો</button>
+
+<label style="margin-top:12px">અન્ય ખર્ચ (₹)</label>
+<input id="otherExpense" value="0">
+</div>
+
+<!-- MESSAGE -->
+<div class="card">
+<button class="btn btn-gen" onclick="generate()">📄 સંદેશ બનાવો</button>
+<button class="btn btn-wa" onclick="sendWhatsApp()">📲 WhatsApp મોકલો</button>
+<textarea id="message" readonly></textarea>
+<button class="btn btn-copy" onclick="copyText()">📋 કૉપી</button>
+<button class="btn btn-clear" onclick="clearAll()">🧹 ક્લિયર</button>
+</div>
+
+<div class="footer">
+Developed by <strong>Pritesh Hirani</strong> | Hirani Tech © <span id="year"></span>
+</div>
+
+</div>
+
+<script>
+document.getElementById("year").innerText=new Date().getFullYear();
+
+let MODE="normal";
+
+const VEGS=["ટામેટા","મરચાં","બટાકા","ડુંગળી","કાકડી","ગાજર","રીંગણ","પાલક","દૂધી"];
+
+const FARMER_PHONE={
+  "JK Hirani":"919687575039",
+  "Bhumi":"919687575039",
+  "Kumud":"919900112233",
+  "Dharmin":"919811122233",
+  "Shreeji Farm":"919822233344",
+  "HMV":"919833344455"
+};
+
+const BUYER_PHONE={
+  "Mohan":"919697575039",
+  "Mansoor":"919822222222",
+  "Ramesh":"919833333333"
+};
+
+function setMode(m){
+  MODE=m;
+  mNormal.classList.toggle("active",m==="normal");
+  mAdv.classList.toggle("active",m==="advanced");
+  mBuyer.classList.toggle("active",m==="buyer");
+
+  farmerSection.classList.toggle("hidden",m==="buyer");
+  sellerSection.classList.toggle("hidden",m==="buyer");
+  buyerSection.classList.toggle("hidden",m!=="buyer");
+
+  clearAll();
+}
+
+function toggleFarmerOther(){
+  farmerOther.style.display=farmerSelect.value==="OTHER"?"block":"none";
+}
+
+function toggleBuyerOther(){
+  buyerOther.style.display=buyerSelect.value==="OTHER"?"block":"none";
+}
+
+function vegSelect(){
+  return `<select class="veg" onchange="toggleVegOther(this)">
+    <option value="">શાક</option>
+    ${VEGS.map(v=>`<option>${v}</option>`).join("")}
+    <option value="OTHER">અન્ય</option>
+  </select>`;
+}
+
+function toggleVegOther(sel){
+  sel.parentElement.querySelector(".other").style.display=
+    sel.value==="OTHER"?"block":"none";
+}
+
+function addSellerItem(){
+  const r=document.createElement("div");
+  r.className="row "+(MODE==="advanced"?"advanced":"normal");
+  r.innerHTML=`
+    ${vegSelect()}
+    <input class="other" placeholder="શાક નામ">
+    <input class="price" placeholder="ભાવ">
+    ${MODE==="normal"
+      ? `<input class="price-to" placeholder="થી">`
+      : `<input class="qty" placeholder="વજન">`}
+  `;
+  sellerItems.appendChild(r);
+}
+
+function addBuyerItem(){
+  const r=document.createElement("div");
+  r.className="row buyer";
+  r.innerHTML=`
+    ${vegSelect()}
+    <input class="other" placeholder="આઇટમ">
+    <input class="boxes" placeholder="બોક્સ">
+    <input class="qty" placeholder="વજન">
+    <input class="price" placeholder="ભાવ">
+    <input class="comm" value="7">
+    <input class="boxrate" value="4">
+  `;
+  buyerItems.appendChild(r);
+}
+
+function getDate(){
+  return new Date().toLocaleDateString("en-GB",{timeZone:"Asia/Kolkata"});
+}
+
+function generate(){
+  let msg="";
+  if(MODE==="buyer"){
+    let base=0,comm=0,box=0;
+    const buyer=buyerSelect.value==="OTHER"?buyerOther.value:buyerSelect.value;
+    msg=`નમસ્તે ${buyer} 🙏\nતારીખ: ${getDate()}\n\n`;
+
+    buyerItems.querySelectorAll(".row").forEach(r=>{
+      const veg=r.querySelector(".veg").value==="OTHER"
+        ? r.querySelector(".other").value
+        : r.querySelector(".veg").value;
+      const p=+r.querySelector(".price").value;
+      const q=+r.querySelector(".qty").value;
+      const b=+r.querySelector(".boxes").value;
+      const c=+r.querySelector(".comm").value;
+      const br=+r.querySelector(".boxrate").value;
+      if(!veg||!p||!q)return;
+      const sub=p*q;
+      base+=sub; comm+=sub*(c/100); box+=b*br;
+      msg+=`${veg} ₹${p} × ${q} = ₹${sub}\n`;
+    });
+
+    const other=+otherExpense.value||0;
+    msg+=`\nમાલ: ₹${base}\nકમિશન: ₹${comm}\nમજૂરી: ₹${box}\nઅન્ય: ₹${other}\n\nકુલ: ₹${base+comm+box+other}\n\n– નીલકંઠ ફ્રૂટ એન્ડ વેજીટેબલ`;
+  }else{
+    const farmer=farmerSelect.value==="OTHER"?farmerOther.value:farmerSelect.value;
+    msg=`નમસ્તે ${farmer} 🙏\nતારીખ: ${getDate()}\n\nઆજના ભાવ:\n`;
+    sellerItems.querySelectorAll(".row").forEach(r=>{
+      const veg=r.querySelector(".veg").value==="OTHER"
+        ? r.querySelector(".other").value
+        : r.querySelector(".veg").value;
+      const p=r.querySelector(".price").value;
+      if(!veg||!p)return;
+      if(MODE==="normal"){
+        const p2=r.querySelector(".price-to").value;
+        msg+=`${veg} : ₹${p}${p2?` - ₹${p2}`:""}\n`;
+      }else{
+        const q=r.querySelector(".qty").value;
+        msg+=`${veg} : ₹${p} × ${q} = ₹${p*q}\n`;
+      }
+    });
+    msg+=`\n– નીલકંઠ ફ્રૂટ એન્ડ વેજીટેબલ`;
+  }
+  message.value=msg;
+}
+
+function sendWhatsApp(){
+  generate();
+  let phone=null;
+  if(MODE==="buyer"){
+    phone=buyerSelect.value==="OTHER"?null:BUYER_PHONE[buyerSelect.value];
+  }else{
+    phone=farmerSelect.value==="OTHER"?null:FARMER_PHONE[farmerSelect.value];
+  }
+  if(!phone){alert("મોબાઇલ નંબર ઉપલબ્ધ નથી");return;}
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message.value)}`,"_blank");
+}
+
+function copyText(){message.select();document.execCommand("copy")}
+function clearAll(){
+  sellerItems.innerHTML="";
+  buyerItems.innerHTML="";
+  message.value="";
+  MODE!=="buyer"?addSellerItem():addBuyerItem();
+}
+
+addSellerItem();
+</script>
+
+</body>
+</html>
