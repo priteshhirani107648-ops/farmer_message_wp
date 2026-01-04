@@ -7,15 +7,19 @@
 
 <style>
 :root{
-  --green:#1f7a3f;
-  --green-light:#e9f6ef;
   --bg:#f4f6f8;
   --card:#ffffff;
   --text:#1f2937;
   --muted:#6b7280;
+  --border:#d1d5db;
+
+  --green:#1f7a3f;
+  --green-light:#e9f6ef;
+
   --danger:#c53030;
   --radius:16px;
 }
+
 
 /* 🌿 FLOATING EMOJI LAYERS */
 .emoji-bg,.emoji-fg{
@@ -111,6 +115,27 @@ textarea{min-height:240px;resize:none;background:#fafafa}
   color:var(--muted);
   margin:22px 0 8px;
 }
+/* 🎉 Small festival switch */
+.festival-switch{
+  margin-top:18px;
+  text-align:center;
+}
+.festival-switch select{
+  width:auto;
+  font-size:12px;
+  padding:6px 10px;
+  border-radius:999px;
+  color:var(--muted);
+}
+.festival-switch{
+  display: none;
+}
+
+.header{
+  padding-top: env(safe-area-inset-top);
+  padding-top: calc(env(safe-area-inset-top) + 14px);
+}
+
 </style>
 </head>
 
@@ -122,20 +147,40 @@ textarea{min-height:240px;resize:none;background:#fafafa}
 <span class="emoji bg" style="left:69%;animation-duration:31s">🧅</span> 
 <span class="emoji bg" style="left:18%;animation-duration:29s">🥔</span> 
 <span class="emoji bg" style="left:81%;animation-duration:37s">🍠</span>
-<span class="emoji bg" style="left:31%;animation-duration:35s;font-size:1.6rem">Developed by Pritesh Hirani | Hirani Tech © 2026</span>
+
+
+<span class="emoji bg permanent" style="left:31%;animation-duration:35s;font-size:1.6rem">
+  Developed by Pritesh Hirani | Hirani Tech © 2026
+</span>
 </div>
 
 <!-- 🌿 FOREGROUND FLOATING EMOJIS -->
 <div class="emoji-fg">
 <span class="emoji fg" style="left:72%;animation-duration:34s;font-size:2.4rem">🫐</span> <span class="emoji fg" style="left:15%;animation-duration:42s;font-size:1.8rem">🌽</span> <span class="emoji fg" style="left:88%;animation-duration:27s;font-size:2.9rem">🍍</span> <span class="emoji fg" style="left:33%;animation-duration:39s;font-size:1.2rem">🍓</span> <span class="emoji fg" style="left:54%;animation-duration:45s;font-size:2.1rem">🧅</span> <span class="emoji fg" style="left:11%;animation-duration:31s;font-size:1.5rem">🥑</span> <span class="emoji fg" style="left:92%;animation-duration:26s;font-size:2.7rem">🥦</span> <span class="emoji fg" style="left:41%;animation-duration:40s;font-size:1.9rem">🍑</span> <span class="emoji fg" style="left:67%;animation-duration:33s;font-size:2.3rem">🥕</span> <span class="emoji fg" style="left:25%;animation-duration:38s;font-size:1.4rem">🍇</span> <span class="emoji fg" style="left:80%;animation-duration:44s;font-size:2.8rem">🍅</span> <span class="emoji fg" style="left:49%;animation-duration:29s;font-size:1.1rem">🍌</span> <span class="emoji fg" style="left:18%;animation-duration:35s;font-size:2.0rem">🫒</span> <span class="emoji fg" style="left:61%;animation-duration:41s;font-size:2.5rem">🍎</span> <span class="emoji fg" style="left:36%;animation-duration:28s;font-size:1.7rem">🌶️</span> <span class="emoji fg" style="left:95%;animation-duration:46s;font-size:3.0rem">🥬</span> <span class="emoji fg" style="left:14%;animation-duration:30s;font-size:1.3rem">🍒</span> <span class="emoji fg" style="left:52%;animation-duration:37s;font-size:2.2rem">🥔</span> <span class="emoji fg" style="left:76%;animation-duration:25s;font-size:1.6rem">🍐</span> <span class="emoji fg" style="left:29%;animation-duration:43s;font-size:2.6rem">🥥</span> <span class="emoji fg" style="left:83%;animation-duration:32s;font-size:1.2rem">🍆</span> <span class="emoji fg" style="left:44%;animation-duration:36s;font-size:2.9rem">🍋</span> <span class="emoji fg" style="left:70%;animation-duration:45s;font-size:1.8rem">🍏</span> <span class="emoji fg" style="left:12%;animation-duration:27s;font-size:2.1rem">🍉</span> <span class="emoji fg" style="left:58%;animation-duration:31s;font-size:1.5rem">🧄</span> <span class="emoji fg" style="left:39%;animation-duration:42s;font-size:2.4rem">🥭</span> <span class="emoji fg" style="left:85%;animation-duration:34s;font-size:1.9rem">🥒</span> <span class="emoji fg" style="left:22%;animation-duration:39s;font-size:2.7rem">🍊</span> <span class="emoji fg" style="left:64%;animation-duration:40s;font-size:1.3rem">🫑</span> <span class="emoji fg" style="left:47%;animation-duration:28s;font-size:2.0rem">🥝</span> <span class="emoji fg" style="left:90%;animation-duration:44s;font-size:2.2rem">🍠</span> <span class="emoji fg" style="left:31%;animation-duration:35s;font-size:1.6rem">🍈</span>
-<span class="emoji fg" style="left:31%;animation-duration:35s;font-size:1.6rem">Developed by Pritesh Hirani | Hirani Tech © 2026</span>
+
+<span class="emoji fg permanent" style="left:31%;animation-duration:35s;font-size:1.6rem">
+  Developed by Pritesh Hirani | Hirani Tech © 2026
+</span>
+
 </div>
+
+
 <div class="app">
 
 <div class="header">
   <h1>🥦 નીલકંઠ ફ્રૂટ એન્ડ વેજીટેબલ</h1>
   <p>ભાવ • બિલ • ખરીદદાર • WhatsApp</p>
 </div>
+<div id="festivalMessage" style="
+  text-align:center;
+  font-weight:700;
+  font-size:14px;
+  margin-top:6px;
+  color:var(--green);
+  display:none;
+">
+</div>
+
 
 <!-- MODE -->
 <div class="card">
@@ -183,6 +228,13 @@ textarea{min-height:240px;resize:none;background:#fafafa}
 </select>
 <input id="buyerOther" class="other" placeholder="ખરીદદારનું નામ લખો">
 <input id="buyerMobile" placeholder="મોબાઇલ નંબર (91XXXXXXXXXX)">
+<button
+  type="button"
+  id="pickContactBtn"
+  onclick="pickContact()"
+  style="font-size:12px;padding:6px 10px;margin-top:6px">
+  📇 Pick from Contacts
+</button>
 
 <div class="header-row">
   <div>શાક</div><div>બોક્સ</div><div>વજન</div>
@@ -205,6 +257,65 @@ textarea{min-height:240px;resize:none;background:#fafafa}
 <button class="btn btn-clear" onclick="clearAll()">🧹 ક્લિયર</button>
 </div>
 
+<div class="festival-switch">
+  <select onchange="manualFestival(this.value)">
+    <option value="">Auto festival theme</option>
+
+    <!-- 🇮🇳 National Days -->
+    <option value="RepublicDay">Republic Day 🇮🇳</option>
+    <option value="IndependenceDay">Independence Day 🇮🇳</option>
+    <option value="GandhiJayanti">Gandhi Jayanti 🕊️</option>
+
+    <!-- 🪁 January -->
+    <option value="Makar">Makar Sankranti 🪁</option>
+    <option value="Lohri">Lohri 🔥</option>
+    <option value="Pongal">Pongal 🌾</option>
+
+    <!-- 🌼 February -->
+    <option value="VasantPanchami">Vasant Panchami 🌼</option>
+    <option value="Shivratri">Maha Shivratri 🔱</option>
+
+    <!-- 🎨 March -->
+    <option value="Holi">Holi 🎨</option>
+
+    <!-- 🌸 April -->
+    <option value="RamNavami">Ram Navami 🏹</option>
+    <option value="HanumanJayanti">Hanuman Jayanti 🚩</option>
+    <option value="Ugadi">Ugadi 🌿</option>
+
+    <!-- 🌕 May -->
+    <option value="AkshayaTritiya">Akshaya Tritiya 💰</option>
+    <option value="BuddhaPurnima">Buddha Purnima ☸️</option>
+
+    <!-- 🌧️ July -->
+    <option value="RathYatra">Rath Yatra 🛕</option>
+    <option value="GuruPurnima">Guru Purnima 📿</option>
+
+    <!-- 🐄 August -->
+    <option value="RakshaBandhan">Raksha Bandhan 🧵</option>
+    <option value="Janmashtami">Janmashtami 🦚</option>
+
+    <!-- 🐘 September -->
+    <option value="GaneshChaturthi">Ganesh Chaturthi 🐘</option>
+
+    <!-- 🌺 October -->
+    <option value="Navratri">Navratri 💃</option>
+    <option value="Dussehra">Dussehra 🏹</option>
+
+    <!-- 🪔 November -->
+    <option value="Diwali">Diwali 🪔</option>
+    <option value="Govardhan">Govardhan Puja 🌿</option>
+    <option value="BhaiDooj">Bhai Dooj 👫</option>
+
+    <!-- 📖 December -->
+    <option value="GitaJayanti">Gita Jayanti 📖</option>
+    <option value="Christmas">Christmas 🎄</option>
+
+    <option value="Default">Default theme</option>
+  </select>
+</div>
+
+
 <div class="footer">
 Developed by <strong>Pritesh Hirani</strong> | Hirani Tech © <span id="year"></span>
 </div>
@@ -212,9 +323,306 @@ Developed by <strong>Pritesh Hirani</strong> | Hirani Tech © <span id="year"></
 </div>
 
 <script>
+
+
 document.getElementById("year").innerText=new Date().getFullYear();
 
 let MODE="normal";
+let MANUAL_THEME = false;
+
+/* 🎉 FESTIVAL THEMES */
+const THEMES={
+ 
+Default:{
+  green:"#1f7a3f",
+  bg:"#f4f6f8",
+  emoji:["🥦","🥕","🥔","🧅","🧄","🥒","🍆","🌶️","🫑","🌽","🥬","🥗","🍠","🫛","🫘", "🍎","🍏","🍐","🍊","🍋","🍌","🍉","🍇","🍓","🫐","🍒","🍑","🥭","🍍","🥝","🍅","🍈","🍋‍🟩","🥥","🫒","🥑","🍄"],
+  message:"🙏 Welcome • Wishing you a prosperous day 🙏 "
+},
+
+
+RepublicDay:{
+  green:"#0f172a",
+  bg:"#eff6ff",
+  emoji:["🇮🇳","🪷","🕊️"],
+  message:"🇮🇳 Happy Republic Day 🇮🇳"
+},
+
+IndependenceDay:{
+  green:"#15803d",
+  bg:"#ecfdf5",
+  emoji:["🇮🇳","🪷","🕊️"],
+  message:"🇮🇳 Happy Independence Day 🇮🇳"
+},
+
+GandhiJayanti:{
+  green:"#334155",
+  bg:"#f8fafc",
+  emoji:["🕊️","🙏","🧘"],
+  message:"🕊️ Gandhi Jayanti • Truth & Non-Violence 🕊️"
+},
+
+Makar:{
+  green:"#d97706",
+  bg:"#fffbeb",
+  emoji:["🪁","☀️","🌾"],
+  message:"🪁 Happy Makar Sankranti 🪁"
+},
+
+Lohri:{
+  green:"#b91c1c",
+  bg:"#fff1f2",
+  emoji:["🔥","🌾","🪵"],
+  message:"🔥 Happy Lohri 🔥"
+},
+
+Pongal:{
+  green:"#15803d",
+  bg:"#f0fdf4",
+  emoji:["🌾","🥥","☀️"],
+  message:"🌾 Happy Pongal 🌾"
+},
+
+VasantPanchami:{
+  green:"#ca8a04",
+  bg:"#fefce8",
+  emoji:["🌼","📚","🪔"],
+  message:"🌼 Happy Vasant Panchami 🌼"
+},
+
+Shivratri:{
+  green:"#0f172a",
+  bg:"#f1f5f9",
+  emoji:["🔱","🕉️","🌙"],
+  message:"🔱 Happy Maha Shivratri 🔱"
+},
+
+Holi:{
+  green:"#db2777",
+  bg:"#fff1f2",
+  emoji:["🎨","🌈","💥"],
+  message:"🎨 Happy Holi 🎨"
+},
+
+RamNavami:{
+  green:"#ea580c",
+  bg:"#fff7ed",
+  emoji:["🏹","🕉️","🌸"],
+  message:"🏹 Happy Ram Navami 🏹"
+},
+
+HanumanJayanti:{
+  green:"#b91c1c",
+  bg:"#fff7ed",
+  emoji:["🚩","💪","🕉️"],
+  message:"🚩 Happy Hanuman Jayanti 🚩"
+},
+
+Ugadi:{
+  green:"#166534",
+  bg:"#f0fdf4",
+  emoji:["🌿","🥭","🪔"],
+  message:"🌿 Happy Ugadi 🌿"
+},
+
+AkshayaTritiya:{
+  green:"#ca8a04",
+  bg:"#fffbeb",
+  emoji:["💰","🪔","🌸"],
+  message:"💰 Happy Akshaya Tritiya 💰"
+},
+
+BuddhaPurnima:{
+  green:"#0f766e",
+  bg:"#f0fdfa",
+  emoji:["☸️","🕊️","🌕"],
+  message:"☸️ Happy Buddha Purnima ☸️"
+},
+
+RathYatra:{
+  green:"#7c2d12",
+  bg:"#fff7ed",
+  emoji:["🛕","🚩","🙏"],
+  message:"🛕 Happy Rath Yatra 🛕"
+},
+
+GuruPurnima:{
+  green:"#334155",
+  bg:"#f8fafc",
+  emoji:["📿","🙏","🌕"],
+  message:"📿 Happy Guru Purnima 📿"
+},
+
+RakshaBandhan:{
+  green:"#be185d",
+  bg:"#fdf2f8",
+  emoji:["🧵","💖","🎁"],
+  message:"🧵 Happy Raksha Bandhan 🧵"
+},
+
+Janmashtami:{
+  green:"#1e40af",
+  bg:"#eff6ff",
+  emoji:["🦚","🪈","👶"],
+  message:"🦚 Happy Janmashtami 🦚"
+},
+
+GaneshChaturthi:{
+  green:"#c2410c",
+  bg:"#fff7ed",
+  emoji:["🐘","🌺","🪔"],
+  message:"🐘 Happy Ganesh Chaturthi 🐘"
+},
+
+Navratri:{
+  green:"#7c3aed",
+  bg:"#faf5ff",
+  emoji:["🪔","💃","🙏"],
+  message:"🪔 Happy Navratri 🪔"
+},
+
+Dussehra:{
+  green:"#dc2626",
+  bg:"#fff1f2",
+  emoji:["🏹","🔥","🚩"],
+  message:"🏹 Happy Dussehra 🏹"
+},
+
+Diwali:{
+  green:"#b45309",
+  bg:"#fff7ed",
+  emoji:["🪔","✨","🎆"],
+  message:"🪔 Happy Diwali 🪔"
+},
+
+Govardhan:{
+  green:"#166534",
+  bg:"#f0fdf4",
+  emoji:["🌿","🐄","🙏"],
+  message:"🌿 Happy Govardhan Puja 🌿"
+},
+
+BhaiDooj:{
+  green:"#be185d",
+  bg:"#fdf2f8",
+  emoji:["👫","💖","🪔"],
+  message:"👫 Happy Bhai Dooj 👫"
+},
+
+GitaJayanti:{
+  green:"#1e293b",
+  bg:"#f8fafc",
+  emoji:["📖","🕉️","🙏"],
+  message:"📖 Happy Gita Jayanti 📖"
+},
+
+Christmas:{
+  green:"#166534",
+  bg:"#f0fdf4",
+  emoji:["🎄","⭐","🎁"],
+  message:"🎄 Merry Christmas 🎄"
+}
+
+};
+
+function applyTheme(t){
+  const th = THEMES[t] || THEMES.Default;
+
+  document.documentElement.style.setProperty("--green", th.green);
+  document.documentElement.style.setProperty("--bg", th.bg);
+
+  document.querySelectorAll(".emoji-bg .emoji:not(.permanent)").forEach((e,i)=>{
+    e.textContent = th.emoji[i % th.emoji.length];
+  });
+
+  document.querySelectorAll(".emoji-fg .emoji:not(.permanent)").forEach((e,i)=>{
+    e.textContent = th.emoji[i % th.emoji.length];
+  });
+
+  // 🎉 Festival message
+  const msgBox = document.getElementById("festivalMessage");
+  if (th.message) {
+    msgBox.textContent = th.message;
+    msgBox.style.display = "block";
+  } else {
+    msgBox.style.display = "none";
+  }
+}
+
+
+
+function autoFestival(){
+  if (MANUAL_THEME) return;
+
+  const d = new Date();
+  const m = d.getMonth() + 1;   // 1–12
+  const day = d.getDate();
+
+  /* 🇮🇳 NATIONAL DAYS (TOP PRIORITY) */
+  if (m === 1 && day >= 20 && day <= 30) applyTheme("RepublicDay");
+  else if (m === 8 && day >= 1 && day <=15 ) applyTheme("IndependenceDay");
+  else if (m === 10 && day === 2) applyTheme("GandhiJayanti");
+
+  /* 🪁 JANUARY */
+  else if (m === 1 && day >= 10 && day <= 14) applyTheme("Makar");
+  else if (m === 1 && day >= 15 && day <= 16) applyTheme("Lohri");
+  else if (m === 1 && day >= 16 && day <= 17) applyTheme("Pongal");
+
+  /* 🌼 FEBRUARY */
+  else if (m === 2 && day >= 1 && day <= 5) applyTheme("VasantPanchami");
+  else if (m === 2 && day >= 18 && day <= 20) applyTheme("Shivratri");
+
+  /* 🎨 MARCH */
+  else if (m === 3 && day >= 24 && day <= 25) applyTheme("Holi");
+
+  /* 🌸 APRIL */
+  else if (m === 4 && day >= 1 && day <= 10) applyTheme("RamNavami");
+  else if (m === 4 && day >= 14 && day <= 16) applyTheme("HanumanJayanti");
+  else if (m === 4 && day >= 1 && day <= 5) applyTheme("Ugadi");
+
+  /* 🌕 MAY */
+  else if (m === 5 && day >= 1 && day <= 3) applyTheme("AkshayaTritiya");
+  else if (m === 5 && day >= 22 && day <= 24) applyTheme("BuddhaPurnima");
+
+  /* 🌧️ JULY */
+  else if (m === 7 && day >= 7 && day <= 9) applyTheme("RathYatra");
+  else if (m === 7 && day >= 20 && day <= 22) applyTheme("GuruPurnima");
+
+  /* 🐄 AUGUST */
+  else if (m === 8 && day >= 9 && day <= 11) applyTheme("RakshaBandhan");
+  else if (m === 8 && day >= 18 && day <= 20) applyTheme("Janmashtami");
+
+  /* 🐘 SEPTEMBER */
+  else if (m === 9 && day >= 7 && day <= 17) applyTheme("GaneshChaturthi");
+
+  /* 🌺 OCTOBER */
+  else if (m === 10 && day >= 3 && day <= 11) applyTheme("Navratri");
+  else if (m === 10 && day === 12) applyTheme("Dussehra");
+
+  /* 🪔 NOVEMBER */
+  else if (m === 11 && day >= 1 && day <= 5) applyTheme("Diwali");
+  else if (m === 11 && day === 6) applyTheme("Govardhan");
+  else if (m === 11 && day === 7) applyTheme("BhaiDooj");
+
+  /* 📖 DECEMBER */
+  else if (m === 12 && day >= 7 && day <= 9) applyTheme("GitaJayanti");
+  else if (m === 12 && day >= 24 && day <= 25) applyTheme("Christmas");
+
+  /* DEFAULT */
+  else applyTheme("Default");
+}
+
+
+function manualFestival(v){
+  if (!v) {
+    MANUAL_THEME = false;
+    autoFestival();
+  } else {
+    MANUAL_THEME = true;
+    applyTheme(v);
+  }
+}
+
 
 const VEGS=["ટામેટા","મરચાં","બટાકા","ડુંગળી","કાકડી","ગાજર","રીંગણ","બાજરીયા રીંગણ","પાલક","દૂધી","પેતરગાલા"];
 
@@ -361,27 +769,83 @@ function generate(){
   message.value=msg;
 }
 
+
 function sendWhatsApp(){
   generate();
-  let phone=null;
-  if(MODE==="buyer"){
-    phone=buyerSelect.value==="OTHER"?null:BUYER_PHONE[buyerSelect.value];
-  }else{
-    phone=farmerSelect.value==="OTHER"?null:FARMER_PHONE[farmerSelect.value];
+
+  let phone = "";
+
+  if (MODE === "buyer") {
+    phone = buyerMobile.value.trim();
+  } else {
+    phone = farmerMobile.value.trim();
   }
-  if(!phone){alert("મોબાઇલ નંબર ઉપલબ્ધ નથી");return;}
-  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message.value)}`,"_blank");
+
+  // mobile not compulsory, but WhatsApp needs a number
+  if (!phone || phone === "91") {
+    alert("મોબાઇલ નંબર દાખલ કરો");
+    return;
+  }
+
+  window.open(
+    `https://wa.me/${phone}?text=${encodeURIComponent(message.value)}`,
+    "_blank"
+  );
 }
+
 
 function copyText(){message.select();document.execCommand("copy")}
 function clearAll(){
+  farmerSelect.value="";
+  farmerOther.value="";
+  farmerOther.style.display="none";
+  buyerSelect.value="";
+  buyerOther.value="";
+  buyerOther.style.display="none";
   sellerItems.innerHTML="";
   buyerItems.innerHTML="";
+  otherExpense.value=0;
   message.value="";
-  MODE!=="buyer"?addSellerItem():addBuyerItem();
+  buyerMobile.value="";
+  farmerMobile.value="";
+  MODE!=="buyer" ? addSellerItem() : addBuyerItem();
 }
 
+window.addEventListener("DOMContentLoaded", autoFestival);
+
 addSellerItem();
+async function pickContact(){
+  if (!("contacts" in navigator) || !("ContactsManager" in window)) {
+    alert("Contact picker not supported on this device");
+    return;
+  }
+
+  try{
+    const contacts = await navigator.contacts.select(
+      ["name","tel"],
+      { multiple:false }
+    );
+
+    if(contacts.length){
+      const c = contacts[0];
+      if(c.tel && c.tel.length){
+        buyerMobile.value = c.tel[0].replace(/\s+/g,"");
+      }
+      if(c.name && c.name.length){
+        buyerOther.value = c.name[0];
+        buyerSelect.value = "OTHER";
+        toggleBuyerOther();
+      }
+    }
+  }catch(err){
+    console.log("Contact pick cancelled");
+  }
+}
+if(!("contacts" in navigator)){
+  document.getElementById("pickContactBtn")?.style.display="none";
+}
+
+
 </script>
 
 </body>
