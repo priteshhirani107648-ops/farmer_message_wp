@@ -150,7 +150,7 @@ textarea{min-height:240px;resize:none;background:#fafafa}
 <!-- FARMER -->
 <div id="farmerSection" class="card">
 <label>ખેડૂત</label>
-<select id="farmerSelect" onchange="toggleFarmerOther()">
+<select id="farmerSelect" onchange="toggleFarmerOther();fillFarmerMobile()">
   <option value="">ખેડૂત પસંદ કરો</option>
   <option>JK Hirani</option>
   <option>Bhumi</option>
@@ -161,6 +161,7 @@ textarea{min-height:240px;resize:none;background:#fafafa}
   <option value="OTHER">અન્ય</option>
 </select>
 <input id="farmerOther" class="other" placeholder="ખેડૂતનું નામ લખો">
+<input id="farmerMobile" placeholder="મોબાઇલ નંબર (91XXXXXXXXXX)">
 </div>
 
 <!-- SELLER -->
@@ -173,7 +174,7 @@ textarea{min-height:240px;resize:none;background:#fafafa}
 <!-- BUYER -->
 <div id="buyerSection" class="card hidden">
 <label>ખરીદદાર</label>
-<select id="buyerSelect" onchange="toggleBuyerOther()">
+<select id="buyerSelect" onchange="toggleBuyerOther();fillBuyerMobile()">
   <option value="">ખરીદદાર પસંદ કરો</option>
   <option>Mohan</option>
   <option>Mansoor</option>
@@ -181,6 +182,7 @@ textarea{min-height:240px;resize:none;background:#fafafa}
   <option value="OTHER">અન્ય</option>
 </select>
 <input id="buyerOther" class="other" placeholder="ખરીદદારનું નામ લખો">
+<input id="buyerMobile" placeholder="મોબાઇલ નંબર (91XXXXXXXXXX)">
 
 <div class="header-row">
   <div>શાક</div><div>બોક્સ</div><div>વજન</div>
@@ -214,7 +216,15 @@ document.getElementById("year").innerText=new Date().getFullYear();
 
 let MODE="normal";
 
-const VEGS=["ટામેટા","મરચાં","બટાકા","ડુંગળી","કાકડી","ગાજર","રીંગણ","પાલક","દૂધી"];
+const VEGS=["ટામેટા","મરચાં","બટાકા","ડુંગળી","કાકડી","ગાજર","રીંગણ","બાજરીયા રીંગણ","પાલક","દૂધી","પેતરગાલા"];
+
+function emoji(v){
+  return {
+    "ટામેટા":"🍅","મરચાં":"🌶️","બટાકા":"🥔","ડુંગળી":"🧅",
+    "કાકડી":"🥒","ગાજર":"🥕","રીંગણ":"🍆",
+    "બાજરીયા રીંગણ":"🍆","પાલક":"🥬","દૂધી":"🥒","પેતરગાલા":"🎃"
+  }[v]||"🥬";
+}
 
 const FARMER_PHONE={
   "JK Hirani":"919726764636",
@@ -251,6 +261,12 @@ function toggleFarmerOther(){
 function toggleBuyerOther(){
   buyerOther.style.display=buyerSelect.value==="OTHER"?"block":"none";
 }
+function fillFarmerMobile(){
+ farmerMobile.value=farmerSelect.value==="OTHER"?"91":(FARMER_PHONE[farmerSelect.value]||"91");
+}
+function fillBuyerMobile(){
+ buyerMobile.value=buyerSelect.value==="OTHER"?"91":(BUYER_PHONE[buyerSelect.value]||"91");
+}
 
 function vegSelect(){
   return `<select class="veg" onchange="toggleVegOther(this)">
@@ -270,8 +286,8 @@ function addSellerItem(){
   r.className="row "+(MODE==="advanced"?"advanced":"normal");
   r.innerHTML=`
     ${vegSelect()}
-    <input class="other" placeholder="શાક નામ">
-    <input class="price" placeholder="ભાવ">
+    <input class="other" placeholder="શાકનું નામ">
+    <input class="price" placeholder="ભાવ ₹">
     ${MODE==="normal"
       ? `<input class="price-to" placeholder="થી">`
       : `<input class="qty" placeholder="વજન">`}
@@ -317,7 +333,8 @@ function generate(){
       if(!veg||!p||!q)return;
       const sub=p*q;
       base+=sub; comm+=sub*(c/100); box+=b*br;
-      msg+=`${veg} ₹${p} × ${q} = ₹${sub}\n`;
+      msg+=`${emoji(veg)} ${veg} 
+ભાવ ₹${p} × ${q} = ₹${sub}\n`;
     });
 
     const other=+otherExpense.value||0;
@@ -333,10 +350,10 @@ function generate(){
       if(!veg||!p)return;
       if(MODE==="normal"){
         const p2=r.querySelector(".price-to").value;
-        msg+=`${veg} : ₹${p}${p2?` - ₹${p2}`:""}\n`;
+        msg+=`${emoji(veg)} ${veg} : ₹${p}${p2?` - ₹${p2}`:""}\n`;
       }else{
         const q=r.querySelector(".qty").value;
-        msg+=`${veg} : ₹${p} × ${q} = ₹${p*q}\n`;
+        msg+=`${emoji(veg)} ${veg} : ₹${p} × ${q} = ₹${p*q}\n`;
       }
     });
     msg+=`\n– નીલકંઠ ફ્રૂટ એન્ડ વેજીટેબલ`;
