@@ -16,6 +16,31 @@
   --danger:#c53030;
   --radius:16px;
 }
+
+/* 🌿 FLOATING EMOJI LAYERS */
+.emoji-bg,.emoji-fg{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  overflow:hidden;
+}
+.emoji-bg{z-index:0}
+.emoji-fg{z-index:2}
+
+.emoji{position:absolute;animation:float linear infinite;}
+.bg{font-size:34px;opacity:0.60;}
+.fg{font-size:50px;opacity:0.15;animation:floatSide linear infinite;}
+
+@keyframes float{
+  from{transform:translateY(110vh) rotate(0deg)}
+  to{transform:translateY(-20vh) rotate(360deg)}
+}
+@keyframes floatSide{
+  from{transform:translate(-10vw,110vh) rotate(0deg)}
+  to{transform:translate(10vw,-20vh) rotate(360deg)}
+}
+
+/* -------- UI -------- */
 *{box-sizing:border-box}
 body{
   margin:0;
@@ -24,6 +49,8 @@ body{
   color:var(--text);
 }
 .app{
+  position:relative;
+  z-index:1;
   max-width:560px;
   margin:auto;
   padding:14px;
@@ -342,6 +369,5 @@ addSellerItem();
 
 </body>
 </html>
-
 
 
