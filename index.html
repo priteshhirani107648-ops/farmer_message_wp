@@ -2,7 +2,8 @@
 <html lang="gu">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="app-version" content="1.0.1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>નીલકંઠ ફ્રૂટ એન્ડ વેજીટેબલ</title>
 
 <style>
@@ -12,158 +13,175 @@
   --text:#1f2937;
   --muted:#6b7280;
   --border:#d1d5db;
-
   --green:#1f7a3f;
   --green-light:#e9f6ef;
-
   --danger:#c53030;
-  --radius:16px;
+  --radius:8px; /* Reduced for space */
 }
-
 
 /* 🌿 FLOATING EMOJI LAYERS */
-.emoji-bg,.emoji-fg{
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  overflow:hidden;
-}
-.emoji-bg{z-index:0}
-.emoji-fg{z-index:2}
-
+.emoji-bg,.emoji-fg{ position:fixed; inset:0; pointer-events:none; overflow:hidden; }
+.emoji-bg{z-index:0} .emoji-fg{z-index:2}
 .emoji{position:absolute;animation:float linear infinite;}
-.bg{font-size:34px;opacity:0.60;}
-.fg{font-size:50px;opacity:0.15;animation:floatSide linear infinite;}
+.bg{font-size:30px;opacity:0.60;}
+.fg{font-size:40px;opacity:0.15;animation:floatSide linear infinite;}
 
-@keyframes float{
-  from{transform:translateY(110vh) rotate(0deg)}
-  to{transform:translateY(-20vh) rotate(360deg)}
-}
-@keyframes floatSide{
-  from{transform:translate(-10vw,110vh) rotate(0deg)}
-  to{transform:translate(10vw,-20vh) rotate(360deg)}
-}
+@keyframes float{ from{transform:translateY(110vh) rotate(0deg)} to{transform:translateY(-20vh) rotate(360deg)} }
+@keyframes floatSide{ from{transform:translate(-10vw,110vh) rotate(0deg)} to{transform:translate(10vw,-20vh) rotate(360deg)} }
 
-/* -------- UI -------- */
+/* -------- UI: SINGLE SCREEN NO-SCROLL -------- */
 *{box-sizing:border-box}
 body{
   margin:0;
   font-family:system-ui,-apple-system,"Segoe UI",Arial;
   background:var(--bg);
   color:var(--text);
+  height: 100dvh; /* Exact mobile height */
+  overflow: hidden; /* Prevent body scroll */
 }
+
 .app{
   position:relative;
   z-index:1;
   max-width:560px;
   margin:auto;
-  padding:14px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 4px 6px; /* Very tight padding */
+  gap: 4px; /* Tight gap between cards */
 }
-.header{text-align:center;padding:14px 0}
-.header h1{margin:0;font-size:22px;font-weight:800}
-.header p{margin-top:6px;font-size:13px;color:var(--muted)}
 
+/* Header */
+.header{ text-align:center; padding: 2px 0; flex-shrink: 0; }
+.header h1{ margin:0; font-size:16px; font-weight:800; }
+.header p{ margin:2px 0 0; font-size:10px; color:var(--muted); }
+
+/* Cards */
 .card{
   background:var(--card);
   border-radius:var(--radius);
-  padding:16px;
-  margin-top:14px;
-  box-shadow:0 10px 22px rgba(0,0,0,.06);
+  padding: 6px 8px;
+  box-shadow:0 2px 8px rgba(0,0,0,.04);
+  flex-shrink: 0;
 }
-label{font-size:14px;font-weight:700;margin-bottom:6px;display:block}
+
+/* Flex Title row for saving space */
+.title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.title-row label { margin: 0; }
+
+label{font-size:12px;font-weight:700; display:block; margin-bottom: 2px;}
+
+/* Inputs */
 input,select,textarea,button{
   width:100%;
-  padding:10px;
-  font-size:14px;
-  border-radius:10px;
+  padding: 6px 8px; /* Small touch targets but usable */
+  font-size:13px; /* Prevents auto zoom */
+  border-radius:6px;
   border:1px solid #d1d5db;
+  outline: none;
 }
-textarea{min-height:240px;resize:none;background:#fafafa}
+input:focus, select:focus, textarea:focus { border-color: var(--green); }
 
-.mode{display:flex;gap:8px}
-.mode button{flex:1;background:#f3f4f6;font-weight:700}
+/* Mode Selection */
+.mode{display:flex;gap:4px;}
+.mode button{flex:1;background:#f3f4f6;font-weight:700; padding: 6px 0; font-size:12px;}
 .mode .active{background:var(--green);color:#fff}
 
-.row{display:grid;gap:6px;margin-top:8px}
-.row.normal{grid-template-columns:1.4fr 1fr 1fr 1fr}
-.row.advanced{grid-template-columns:1.4fr 1fr 1fr}
-.row.buyer{grid-template-columns:1.4fr 1fr 1fr 1fr 1fr 1fr}
+/* Split Rows for Farmer/Buyer Selection */
+.split-row { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
 
-.header-row{
-  display:grid;
-  grid-template-columns:1.4fr 1fr 1fr 1fr 1fr 1fr;
-  gap:6px;
-  font-size:12px;
-  font-weight:700;
-  color:var(--muted);
-  margin-top:10px;
+/* Items Scrolling Container (If items > 3) */
+.items-container {
+  overflow-y: auto;
+  max-height: 140px; /* Limits height, enables inner scroll */
+  padding-right: 2px;
 }
 
-.hidden{display:none}
-.other{display:none}
+/* Dynamic Rows */
+.row{display:grid;gap:4px;margin-bottom:4px;}
+.row.normal{grid-template-columns:1.5fr 1fr 1fr;}
+.row.advanced{grid-template-columns:1.5fr 1fr 1fr;}
+.row input, .row select { background: #f9fafb; }
 
-.btn{border:none;font-weight:700;margin-top:12px}
+/* Buyer Mode Compact Grid */
+.row.buyer{
+  background: #f9fafb;
+  padding: 4px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.row.buyer .veg { grid-column: span 3; } /* Veg dropdown full width */
+.row.buyer .other { grid-column: span 3; }
+
+.hidden{display:none !important;}
+.other{display:none;}
+
+/* Buttons */
+.btn{border:none;font-weight:700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;}
+.btn-small{ width: auto; padding: 4px 8px; font-size: 11px; margin: 0;} /* Add item button */
 .btn-add{background:var(--green-light);color:var(--green)}
 .btn-gen{background:var(--green);color:#fff}
 .btn-wa{background:#dcfce7;color:#166534}
 .btn-copy{background:#eef2ff;color:#1d4ed8}
 .btn-clear{background:#fff3f3;color:var(--danger)}
 
+/* 2x2 Grid for Actions */
+.action-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+/* Message Textarea Auto-Expands */
+.msg-card {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Takes all remaining vertical space */
+  min-height: 0;
+}
+textarea{
+  flex-grow: 1;
+  resize: none;
+  background: #fafafa;
+  min-height: 40px; /* Extremely small min-height to ensure it fits */
+}
+
+/* Footer */
 .footer{
   text-align:center;
-  font-size:12px;
+  font-size:10px;
   color:var(--muted);
-  margin:22px 0 8px;
-}
-/* 🎉 Small festival switch */
-.festival-switch{
-  margin-top:18px;
-  text-align:center;
-}
-.festival-switch select{
-  width:auto;
-  font-size:12px;
-  padding:6px 10px;
-  border-radius:999px;
-  color:var(--muted);
-}
-.festival-switch{
-  display: none;
+  margin: 0;
+  flex-shrink: 0;
 }
 
-.header{
-  padding-top: env(safe-area-inset-top);
-  padding-top: calc(env(safe-area-inset-top) + 14px);
-}
-
+/* Hide extra things by default to save space */
+.festival-switch{ display: none; }
+#festivalMessage{ display: none; }
 </style>
 </head>
 
 <body>
-<!-- 🌱 BACKGROUND EMOJIS -->
+  <span id="appVersion" style="display:none;"></span>
+
 <div class="emoji-bg">
-<span class="emoji bg" style="left:14%;animation-duration:38s">🍎</span> <span class="emoji bg" style="left:62%;animation-duration:27s">🍏</span> <span class="emoji bg" style="left:88%;animation-duration:41s">🍐</span> <span class="emoji bg" style="left:23%;animation-duration:33s">🍊</span> <span class="emoji bg" style="left:51%;animation-duration:45s">🍋</span> <span class="emoji bg" style="left:76%;animation-duration:29s">🍌</span> <span class="emoji bg" style="left:12%;animation-duration:36s">🍉</span> <span class="emoji bg" style="left:93%;animation-duration:40s">🍇</span> <span class="emoji bg" style="left:44%;animation-duration:31s">🍓</span> <span class="emoji bg" style="left:67%;animation-duration:43s">🫐</span> <span class="emoji bg" style="left:35%;animation-duration:26s">🍈</span> <span class="emoji bg" style="left:19%;animation-duration:44s">🍒</span> <span class="emoji bg" style="left:82%;animation-duration:37s">🍑</span> <span class="emoji bg" style="left:55%;animation-duration:30s">🥭</span> <span class="emoji bg" style="left:28%;animation-duration:42s">🍍</span> <span class="emoji bg" style="left:71%;animation-duration:28s">🥥</span> <span class="emoji bg" style="left:49%;animation-duration:39s">🥝</span> <span class="emoji bg" style="left:10%;animation-duration:40s">🍅</span> <span class="emoji bg" style="left:90%;animation-duration:32s">🍆</span> <span class="emoji bg" style="left:33%;animation-duration:46s">🥑</span> <span class="emoji bg" style="left:60%;animation-duration:25s">🥦</span> <span class="emoji bg" style="left:15%;animation-duration:34s">🥬</span> <span class="emoji bg" style="left:85%;animation-duration:41s">🥒</span> <span class="emoji bg" style="left:41%;animation-duration:35s">🌶️</span> <span class="emoji bg" style="left:77%;animation-duration:27s">🫑</span> <span class="emoji bg" style="left:22%;animation-duration:43s">🌽</span> <span class="emoji bg" style="left:58%;animation-duration:38s">🥕</span> <span class="emoji bg" style="left:94%;animation-duration:26s">🫒</span> 
-<span class="emoji bg" style="left:47%;animation-duration:45s">🧄</span> 
-<span class="emoji bg" style="left:69%;animation-duration:31s">🧅</span> 
-<span class="emoji bg" style="left:18%;animation-duration:29s">🥔</span> 
-<span class="emoji bg" style="left:81%;animation-duration:37s">🍠</span>
-
-
-<span class="emoji bg permanent" style="left:31%;animation-duration:35s;font-size:1.6rem">
-  Developed by Pritesh Hirani | Hirani Tech © 2026
-</span>
+<span class="emoji bg" style="left:14%;animation-duration:38s">🍎</span> 
+<span class="emoji bg" style="left:62%;animation-duration:27s">🍏</span> 
+<span class="emoji bg" style="left:23%;animation-duration:33s">🍊</span> 
+<span class="emoji bg" style="left:76%;animation-duration:29s">🍌</span> 
+<span class="emoji bg" style="left:44%;animation-duration:31s">🍓</span> 
+<span class="emoji bg" style="left:10%;animation-duration:40s">🍅</span> 
+<span class="emoji bg" style="left:60%;animation-duration:25s">🥦</span> 
+<span class="emoji bg" style="left:41%;animation-duration:35s">🌶️</span>
 </div>
-
-<!-- 🌿 FOREGROUND FLOATING EMOJIS -->
-<div class="emoji-fg">
-<span class="emoji fg" style="left:72%;animation-duration:34s;font-size:2.4rem">🫐</span> <span class="emoji fg" style="left:15%;animation-duration:42s;font-size:1.8rem">🌽</span> <span class="emoji fg" style="left:88%;animation-duration:27s;font-size:2.9rem">🍍</span> <span class="emoji fg" style="left:33%;animation-duration:39s;font-size:1.2rem">🍓</span> <span class="emoji fg" style="left:54%;animation-duration:45s;font-size:2.1rem">🧅</span> <span class="emoji fg" style="left:11%;animation-duration:31s;font-size:1.5rem">🥑</span> <span class="emoji fg" style="left:92%;animation-duration:26s;font-size:2.7rem">🥦</span> <span class="emoji fg" style="left:41%;animation-duration:40s;font-size:1.9rem">🍑</span> <span class="emoji fg" style="left:67%;animation-duration:33s;font-size:2.3rem">🥕</span> <span class="emoji fg" style="left:25%;animation-duration:38s;font-size:1.4rem">🍇</span> <span class="emoji fg" style="left:80%;animation-duration:44s;font-size:2.8rem">🍅</span> <span class="emoji fg" style="left:49%;animation-duration:29s;font-size:1.1rem">🍌</span> <span class="emoji fg" style="left:18%;animation-duration:35s;font-size:2.0rem">🫒</span> <span class="emoji fg" style="left:61%;animation-duration:41s;font-size:2.5rem">🍎</span> <span class="emoji fg" style="left:36%;animation-duration:28s;font-size:1.7rem">🌶️</span> <span class="emoji fg" style="left:95%;animation-duration:46s;font-size:3.0rem">🥬</span> <span class="emoji fg" style="left:14%;animation-duration:30s;font-size:1.3rem">🍒</span> <span class="emoji fg" style="left:52%;animation-duration:37s;font-size:2.2rem">🥔</span> <span class="emoji fg" style="left:76%;animation-duration:25s;font-size:1.6rem">🍐</span> <span class="emoji fg" style="left:29%;animation-duration:43s;font-size:2.6rem">🥥</span> <span class="emoji fg" style="left:83%;animation-duration:32s;font-size:1.2rem">🍆</span> <span class="emoji fg" style="left:44%;animation-duration:36s;font-size:2.9rem">🍋</span> <span class="emoji fg" style="left:70%;animation-duration:45s;font-size:1.8rem">🍏</span> <span class="emoji fg" style="left:12%;animation-duration:27s;font-size:2.1rem">🍉</span> <span class="emoji fg" style="left:58%;animation-duration:31s;font-size:1.5rem">🧄</span> <span class="emoji fg" style="left:39%;animation-duration:42s;font-size:2.4rem">🥭</span> <span class="emoji fg" style="left:85%;animation-duration:34s;font-size:1.9rem">🥒</span> <span class="emoji fg" style="left:22%;animation-duration:39s;font-size:2.7rem">🍊</span> <span class="emoji fg" style="left:64%;animation-duration:40s;font-size:1.3rem">🫑</span> <span class="emoji fg" style="left:47%;animation-duration:28s;font-size:2.0rem">🥝</span> <span class="emoji fg" style="left:90%;animation-duration:44s;font-size:2.2rem">🍠</span> <span class="emoji fg" style="left:31%;animation-duration:35s;font-size:1.6rem">🍈</span>
-
-<span class="emoji fg permanent" style="left:31%;animation-duration:35s;font-size:1.6rem">
-  Developed by Pritesh Hirani | Hirani Tech © 2026
-</span>
-
-</div>
-
 
 <div class="app">
 
@@ -171,483 +189,100 @@ textarea{min-height:240px;resize:none;background:#fafafa}
   <h1>🥦 નીલકંઠ ફ્રૂટ એન્ડ વેજીટેબલ</h1>
   <p>ભાવ • બિલ • ખરીદદાર • WhatsApp</p>
 </div>
-<div id="festivalMessage" style="
-  text-align:center;
-  font-weight:700;
-  font-size:14px;
-  margin-top:6px;
-  color:var(--green);
-  display:none;
-">
+
+<div class="card" style="padding: 4px 8px;">
+  <div class="mode">
+    <button id="mNormal" class="active" onclick="setMode('normal')">🟢 Normal</button>
+    <button id="mAdv" onclick="setMode('advanced')">🔵 Advanced</button>
+    <button id="mBuyer" onclick="setMode('buyer')">🔴 Buyer</button>
+  </div>
 </div>
 
-
-<!-- MODE -->
-<div class="card">
-<label>મોડ પસંદ કરો</label>
-<div class="mode">
-  <button id="mNormal" class="active" onclick="setMode('normal')">🟢 Normal</button>
-  <button id="mAdv" onclick="setMode('advanced')">🔵 Advanced</button>
-  <button id="mBuyer" onclick="setMode('buyer')">🔴 Buyer</button>
-</div>
-</div>
-
-<!-- FARMER -->
 <div id="farmerSection" class="card">
-<label>ખેડૂત</label>
-<select id="farmerSelect" onchange="toggleFarmerOther();fillFarmerMobile()">
-  <option value="">ખેડૂત પસંદ કરો</option>
-  <option>JK Hirani</option>
-  <option>Bhumi</option>
-  <option>Kumud</option>
-  <option>Dharmin</option>
-  <option>Shreeji Farm</option>
-  <option>HMV</option>
-  <option value="OTHER">અન્ય</option>
-</select>
-<input id="farmerOther" class="other" placeholder="ખેડૂતનું નામ લખો">
-<input id="farmerMobile" placeholder="મોબાઇલ નંબર (91XXXXXXXXXX)">
+  <div class="title-row">
+    <label>ખેડૂતની માહિતી</label>
+  </div>
+  <div class="split-row">
+    <div>
+      <select id="farmerSelect" onchange="toggleFarmerOther();fillFarmerMobile()">
+        <option value="">નામ પસંદ કરો</option>
+        <option>JK Hirani</option>
+        <option>Bhumi</option>
+        <option>Kumud</option>
+        <option>Dharmin</option>
+        <option>Shreeji Farm</option>
+        <option>HMV</option>
+        <option value="OTHER">અન્ય</option>
+      </select>
+      <input id="farmerOther" class="other" placeholder="નામ લખો" style="margin-top:4px;">
+    </div>
+    <input id="farmerMobile" placeholder="મોબાઇલ (91...)">
+  </div>
 </div>
 
-<!-- SELLER -->
 <div id="sellerSection" class="card">
-<label>શાક / ભાવ</label>
-<div id="sellerItems"></div>
-<button class="btn btn-add" onclick="addSellerItem()">➕ વધુ ઉમેરો</button>
+  <div class="title-row">
+    <label>શાક અને ભાવ</label>
+    <button class="btn btn-add btn-small" onclick="addSellerItem()">➕ ઉમેરો</button>
+  </div>
+  <div id="sellerItems" class="items-container"></div>
 </div>
 
-<!-- BUYER -->
 <div id="buyerSection" class="card hidden">
-<label>ખરીદદાર</label>
-<select id="buyerSelect" onchange="toggleBuyerOther();fillBuyerMobile()">
-  <option value="">ખરીદદાર પસંદ કરો</option>
-  <option>Mohan</option>
-  <option>Mansoor</option>
-  <option>Ramesh</option>
-  <option value="OTHER">અન્ય</option>
-</select>
-<input id="buyerOther" class="other" placeholder="ખરીદદારનું નામ લખો">
-<input id="buyerMobile" placeholder="મોબાઇલ નંબર (91XXXXXXXXXX)">
-<button
-  type="button"
-  id="pickContactBtn"
-  onclick="pickContact()"
-  style="font-size:12px;padding:6px 10px;margin-top:6px">
-  📇 Pick from Contacts
-</button>
-
-<div class="header-row">
-  <div>શાક</div><div>બોક્સ</div><div>વજન</div>
-  <div>ભાવ</div><div>કમિશન %</div><div>મજૂરી ₹</div>
+  <div class="title-row">
+    <label>ખરીદદાર</label>
+    <input id="otherExpense" placeholder="અન્ય ખર્ચ ₹" style="width: 80px; padding:4px; font-size:11px;">
+  </div>
+  <div class="split-row" style="margin-bottom: 4px;">
+    <div>
+      <select id="buyerSelect" onchange="toggleBuyerOther();fillBuyerMobile()">
+        <option value="">નામ પસંદ કરો</option>
+        <option>Mohan</option>
+        <option>Mansoor</option>
+        <option>Ramesh</option>
+        <option value="OTHER">અન્ય</option>
+      </select>
+      <input id="buyerOther" class="other" placeholder="નામ લખો" style="margin-top:4px;">
+    </div>
+    <input id="buyerMobile" placeholder="મોબાઇલ (91...)">
+  </div>
+  
+  <div class="title-row" style="margin-top: 6px;">
+    <label style="color:var(--green)">આઇટમ્સ</label>
+    <button class="btn btn-add btn-small" onclick="addBuyerItem()">➕ ઉમેરો</button>
+  </div>
+  <div id="buyerItems" class="items-container"></div>
 </div>
 
-<div id="buyerItems"></div>
-<button class="btn btn-add" onclick="addBuyerItem()">➕ આઇટમ ઉમેરો</button>
-
-<label style="margin-top:12px">અન્ય ખર્ચ (₹)</label>
-<input id="otherExpense" value="0">
+<div class="card msg-card">
+  <div class="action-grid">
+    <button class="btn btn-gen" onclick="generate()">📄 બનાવો</button>
+    <button class="btn btn-wa" onclick="sendWhatsApp()">📲 WhatsApp</button>
+    <button class="btn btn-copy" onclick="copyText()">📋 કૉપી</button>
+    <button class="btn btn-clear" onclick="clearAll()">🧹 ક્લિયર</button>
+  </div>
+  <textarea id="message" readonly placeholder="અહીં મેસેજ દેખાશે..."></textarea>
 </div>
-
-<!-- MESSAGE -->
-<div class="card">
-<button class="btn btn-gen" onclick="generate()">📄 સંદેશ બનાવો</button>
-<button class="btn btn-wa" onclick="sendWhatsApp()">📲 WhatsApp મોકલો</button>
-<textarea id="message" readonly></textarea>
-<button class="btn btn-copy" onclick="copyText()">📋 કૉપી</button>
-<button class="btn btn-clear" onclick="clearAll()">🧹 ક્લિયર</button>
-</div>
-
-<div class="festival-switch">
-  <select onchange="manualFestival(this.value)">
-    <option value="">Auto festival theme</option>
-
-    <!-- 🇮🇳 National Days -->
-    <option value="RepublicDay">Republic Day 🇮🇳</option>
-    <option value="IndependenceDay">Independence Day 🇮🇳</option>
-    <option value="GandhiJayanti">Gandhi Jayanti 🕊️</option>
-
-    <!-- 🪁 January -->
-    <option value="Makar">Makar Sankranti 🪁</option>
-    <option value="Lohri">Lohri 🔥</option>
-    <option value="Pongal">Pongal 🌾</option>
-
-    <!-- 🌼 February -->
-    <option value="VasantPanchami">Vasant Panchami 🌼</option>
-    <option value="Shivratri">Maha Shivratri 🔱</option>
-
-    <!-- 🎨 March -->
-    <option value="Holi">Holi 🎨</option>
-
-    <!-- 🌸 April -->
-    <option value="RamNavami">Ram Navami 🏹</option>
-    <option value="HanumanJayanti">Hanuman Jayanti 🚩</option>
-    <option value="Ugadi">Ugadi 🌿</option>
-
-    <!-- 🌕 May -->
-    <option value="AkshayaTritiya">Akshaya Tritiya 💰</option>
-    <option value="BuddhaPurnima">Buddha Purnima ☸️</option>
-
-    <!-- 🌧️ July -->
-    <option value="RathYatra">Rath Yatra 🛕</option>
-    <option value="GuruPurnima">Guru Purnima 📿</option>
-
-    <!-- 🐄 August -->
-    <option value="RakshaBandhan">Raksha Bandhan 🧵</option>
-    <option value="Janmashtami">Janmashtami 🦚</option>
-
-    <!-- 🐘 September -->
-    <option value="GaneshChaturthi">Ganesh Chaturthi 🐘</option>
-
-    <!-- 🌺 October -->
-    <option value="Navratri">Navratri 💃</option>
-    <option value="Dussehra">Dussehra 🏹</option>
-
-    <!-- 🪔 November -->
-    <option value="Diwali">Diwali 🪔</option>
-    <option value="Govardhan">Govardhan Puja 🌿</option>
-    <option value="BhaiDooj">Bhai Dooj 👫</option>
-
-    <!-- 📖 December -->
-    <option value="GitaJayanti">Gita Jayanti 📖</option>
-    <option value="Christmas">Christmas 🎄</option>
-
-    <option value="Default">Default theme</option>
-  </select>
-</div>
-
 
 <div class="footer">
-Developed by <strong>Pritesh Hirani</strong> | Hirani Tech © <span id="year"></span>
+  Pritesh Hirani | Hirani Tech © <span id="year"></span>
 </div>
 
 </div>
 
 <script>
-
-
 document.getElementById("year").innerText=new Date().getFullYear();
 
 let MODE="normal";
-let MANUAL_THEME = false;
-
-/* 🎉 FESTIVAL THEMES */
-const THEMES={
- 
-Default:{
-  green:"#1f7a3f",
-  bg:"#f4f6f8",
-  emoji:["🥦","🥕","🥔","🧅","🧄","🥒","🍆","🌶️","🫑","🌽","🥬","🥗","🍠","🫛","🫘", "🍎","🍏","🍐","🍊","🍋","🍌","🍉","🍇","🍓","🫐","🍒","🍑","🥭","🍍","🥝","🍅","🍈","🍋‍🟩","🥥","🫒","🥑","🍄"],
-  message:"🙏 Welcome • Wishing you a prosperous day 🙏 "
-},
-
-
-RepublicDay:{
-  green:"#0f172a",
-  bg:"#eff6ff",
-  emoji:["🇮🇳","🪷","🕊️"],
-  message:"🇮🇳 Happy Republic Day 🇮🇳"
-},
-
-IndependenceDay:{
-  green:"#15803d",
-  bg:"#ecfdf5",
-  emoji:["🇮🇳","🪷","🕊️"],
-  message:"🇮🇳 Happy Independence Day 🇮🇳"
-},
-
-GandhiJayanti:{
-  green:"#334155",
-  bg:"#f8fafc",
-  emoji:["🕊️","🙏","🧘"],
-  message:"🕊️ Gandhi Jayanti • Truth & Non-Violence 🕊️"
-},
-
-Makar:{
-  green:"#d97706",
-  bg:"#fffbeb",
-  emoji:["🪁","☀️","🌾"],
-  message:"🪁 Happy Makar Sankranti 🪁"
-},
-
-Lohri:{
-  green:"#b91c1c",
-  bg:"#fff1f2",
-  emoji:["🔥","🌾","🪵"],
-  message:"🔥 Happy Lohri 🔥"
-},
-
-Pongal:{
-  green:"#15803d",
-  bg:"#f0fdf4",
-  emoji:["🌾","🥥","☀️"],
-  message:"🌾 Happy Pongal 🌾"
-},
-
-VasantPanchami:{
-  green:"#ca8a04",
-  bg:"#fefce8",
-  emoji:["🌼","📚","🪔"],
-  message:"🌼 Happy Vasant Panchami 🌼"
-},
-
-Shivratri:{
-  green:"#0f172a",
-  bg:"#f1f5f9",
-  emoji:["🔱","🕉️","🌙"],
-  message:"🔱 Happy Maha Shivratri 🔱"
-},
-
-Holi:{
-  green:"#db2777",
-  bg:"#fff1f2",
-  emoji:["🎨","🌈","💥"],
-  message:"🎨 Happy Holi 🎨"
-},
-
-RamNavami:{
-  green:"#ea580c",
-  bg:"#fff7ed",
-  emoji:["🏹","🕉️","🌸"],
-  message:"🏹 Happy Ram Navami 🏹"
-},
-
-HanumanJayanti:{
-  green:"#b91c1c",
-  bg:"#fff7ed",
-  emoji:["🚩","💪","🕉️"],
-  message:"🚩 Happy Hanuman Jayanti 🚩"
-},
-
-Ugadi:{
-  green:"#166534",
-  bg:"#f0fdf4",
-  emoji:["🌿","🥭","🪔"],
-  message:"🌿 Happy Ugadi 🌿"
-},
-
-AkshayaTritiya:{
-  green:"#ca8a04",
-  bg:"#fffbeb",
-  emoji:["💰","🪔","🌸"],
-  message:"💰 Happy Akshaya Tritiya 💰"
-},
-
-BuddhaPurnima:{
-  green:"#0f766e",
-  bg:"#f0fdfa",
-  emoji:["☸️","🕊️","🌕"],
-  message:"☸️ Happy Buddha Purnima ☸️"
-},
-
-RathYatra:{
-  green:"#7c2d12",
-  bg:"#fff7ed",
-  emoji:["🛕","🚩","🙏"],
-  message:"🛕 Happy Rath Yatra 🛕"
-},
-
-GuruPurnima:{
-  green:"#334155",
-  bg:"#f8fafc",
-  emoji:["📿","🙏","🌕"],
-  message:"📿 Happy Guru Purnima 📿"
-},
-
-RakshaBandhan:{
-  green:"#be185d",
-  bg:"#fdf2f8",
-  emoji:["🧵","💖","🎁"],
-  message:"🧵 Happy Raksha Bandhan 🧵"
-},
-
-Janmashtami:{
-  green:"#1e40af",
-  bg:"#eff6ff",
-  emoji:["🦚","🪈","👶"],
-  message:"🦚 Happy Janmashtami 🦚"
-},
-
-GaneshChaturthi:{
-  green:"#c2410c",
-  bg:"#fff7ed",
-  emoji:["🐘","🌺","🪔"],
-  message:"🐘 Happy Ganesh Chaturthi 🐘"
-},
-
-Navratri:{
-  green:"#7c3aed",
-  bg:"#faf5ff",
-  emoji:["🪔","💃","🙏"],
-  message:"🪔 Happy Navratri 🪔"
-},
-
-Dussehra:{
-  green:"#dc2626",
-  bg:"#fff1f2",
-  emoji:["🏹","🔥","🚩"],
-  message:"🏹 Happy Dussehra 🏹"
-},
-
-Diwali:{
-  green:"#b45309",
-  bg:"#fff7ed",
-  emoji:["🪔","✨","🎆"],
-  message:"🪔 Happy Diwali 🪔"
-},
-
-Govardhan:{
-  green:"#166534",
-  bg:"#f0fdf4",
-  emoji:["🌿","🐄","🙏"],
-  message:"🌿 Happy Govardhan Puja 🌿"
-},
-
-BhaiDooj:{
-  green:"#be185d",
-  bg:"#fdf2f8",
-  emoji:["👫","💖","🪔"],
-  message:"👫 Happy Bhai Dooj 👫"
-},
-
-GitaJayanti:{
-  green:"#1e293b",
-  bg:"#f8fafc",
-  emoji:["📖","🕉️","🙏"],
-  message:"📖 Happy Gita Jayanti 📖"
-},
-
-Christmas:{
-  green:"#166534",
-  bg:"#f0fdf4",
-  emoji:["🎄","⭐","🎁"],
-  message:"🎄 Merry Christmas 🎄"
-}
-
-};
-
-function applyTheme(t){
-  const th = THEMES[t] || THEMES.Default;
-
-  document.documentElement.style.setProperty("--green", th.green);
-  document.documentElement.style.setProperty("--bg", th.bg);
-
-  document.querySelectorAll(".emoji-bg .emoji:not(.permanent)").forEach((e,i)=>{
-    e.textContent = th.emoji[i % th.emoji.length];
-  });
-
-  document.querySelectorAll(".emoji-fg .emoji:not(.permanent)").forEach((e,i)=>{
-    e.textContent = th.emoji[i % th.emoji.length];
-  });
-
-  // 🎉 Festival message
-  const msgBox = document.getElementById("festivalMessage");
-  if (th.message) {
-    msgBox.textContent = th.message;
-    msgBox.style.display = "block";
-  } else {
-    msgBox.style.display = "none";
-  }
-}
-
-
-
-function autoFestival(){
-  if (MANUAL_THEME) return;
-
-  const d = new Date();
-  const m = d.getMonth() + 1;   // 1–12
-  const day = d.getDate();
-
-  /* 🇮🇳 NATIONAL DAYS (TOP PRIORITY) */
-  if (m === 1 && day >= 20 && day <= 30) applyTheme("RepublicDay");
-  else if (m === 8 && day >= 1 && day <=15 ) applyTheme("IndependenceDay");
-  else if (m === 10 && day === 2) applyTheme("GandhiJayanti");
-
-  /* 🪁 JANUARY */
-  else if (m === 1 && day >= 10 && day <= 14) applyTheme("Makar");
-  else if (m === 1 && day >= 15 && day <= 16) applyTheme("Lohri");
-  else if (m === 1 && day >= 16 && day <= 17) applyTheme("Pongal");
-
-  /* 🌼 FEBRUARY */
-  else if (m === 2 && day >= 1 && day <= 5) applyTheme("VasantPanchami");
-  else if (m === 2 && day >= 18 && day <= 20) applyTheme("Shivratri");
-
-  /* 🎨 MARCH */
-  else if (m === 3 && day >= 24 && day <= 25) applyTheme("Holi");
-
-  /* 🌸 APRIL */
-  else if (m === 4 && day >= 1 && day <= 10) applyTheme("RamNavami");
-  else if (m === 4 && day >= 14 && day <= 16) applyTheme("HanumanJayanti");
-  else if (m === 4 && day >= 1 && day <= 5) applyTheme("Ugadi");
-
-  /* 🌕 MAY */
-  else if (m === 5 && day >= 1 && day <= 3) applyTheme("AkshayaTritiya");
-  else if (m === 5 && day >= 22 && day <= 24) applyTheme("BuddhaPurnima");
-
-  /* 🌧️ JULY */
-  else if (m === 7 && day >= 7 && day <= 9) applyTheme("RathYatra");
-  else if (m === 7 && day >= 20 && day <= 22) applyTheme("GuruPurnima");
-
-  /* 🐄 AUGUST */
-  else if (m === 8 && day >= 9 && day <= 11) applyTheme("RakshaBandhan");
-  else if (m === 8 && day >= 18 && day <= 20) applyTheme("Janmashtami");
-
-  /* 🐘 SEPTEMBER */
-  else if (m === 9 && day >= 7 && day <= 17) applyTheme("GaneshChaturthi");
-
-  /* 🌺 OCTOBER */
-  else if (m === 10 && day >= 3 && day <= 11) applyTheme("Navratri");
-  else if (m === 10 && day === 12) applyTheme("Dussehra");
-
-  /* 🪔 NOVEMBER */
-  else if (m === 11 && day >= 1 && day <= 5) applyTheme("Diwali");
-  else if (m === 11 && day === 6) applyTheme("Govardhan");
-  else if (m === 11 && day === 7) applyTheme("BhaiDooj");
-
-  /* 📖 DECEMBER */
-  else if (m === 12 && day >= 7 && day <= 9) applyTheme("GitaJayanti");
-  else if (m === 12 && day >= 24 && day <= 25) applyTheme("Christmas");
-
-  /* DEFAULT */
-  else applyTheme("Default");
-}
-
-
-function manualFestival(v){
-  if (!v) {
-    MANUAL_THEME = false;
-    autoFestival();
-  } else {
-    MANUAL_THEME = true;
-    applyTheme(v);
-  }
-}
-
 
 const VEGS=["ટામેટા","મરચાં","બટાકા","ડુંગળી","કાકડી","ગાજર","રીંગણ","બાજરીયા રીંગણ","પાલક","દૂધી","પેતરગાલા"];
 
 function emoji(v){
-  return {
-    "ટામેટા":"🍅","મરચાં":"🌶️","બટાકા":"🥔","ડુંગળી":"🧅",
-    "કાકડી":"🥒","ગાજર":"🥕","રીંગણ":"🍆",
-    "બાજરીયા રીંગણ":"🍆","પાલક":"🥬","દૂધી":"🥒","પેતરગાલા":"🎃"
-  }[v]||"🥬";
+  return {"ટામેટા":"🍅","મરચાં":"🌶️","બટાકા":"🥔","ડુંગળી":"🧅","કાકડી":"🥒","ગાજર":"🥕","રીંગણ":"🍆","બાજરીયા રીંગણ":"🍆","પાલક":"🥬","દૂધી":"🥒","પેતરગાલા":"🎃"}[v]||"🥬";
 }
 
-const FARMER_PHONE={
-  "JK Hirani":"919726764636",
-  "Bhumi":"919925311805",
-  "Kumud":"919925311805",
-  "Dharmin":"919879766839",
-  "Shreeji Farm":"91",
-  "HMV":"91"
-};
-
-const BUYER_PHONE={
-  "Mohan":"919687575039",
-  "Mansoor":"919822222222",
-  "Ramesh":"919833333333"
-};
+const FARMER_PHONE={"JK Hirani":"919726764636","Bhumi":"919925311805","Kumud":"919925311805","Dharmin":"919879766839","Shreeji Farm":"91","HMV":"91"};
+const BUYER_PHONE={"Mohan":"919687575039","Mansoor":"919822222222","Ramesh":"919833333333"};
 
 function setMode(m){
   MODE=m;
@@ -655,26 +290,16 @@ function setMode(m){
   mAdv.classList.toggle("active",m==="advanced");
   mBuyer.classList.toggle("active",m==="buyer");
 
-  farmerSection.classList.toggle("hidden",m==="buyer");
-  sellerSection.classList.toggle("hidden",m==="buyer");
-  buyerSection.classList.toggle("hidden",m!=="buyer");
-
+  document.getElementById("farmerSection").classList.toggle("hidden",m==="buyer");
+  document.getElementById("sellerSection").classList.toggle("hidden",m==="buyer");
+  document.getElementById("buyerSection").classList.toggle("hidden",m!=="buyer");
   clearAll();
 }
 
-function toggleFarmerOther(){
-  farmerOther.style.display=farmerSelect.value==="OTHER"?"block":"none";
-}
-
-function toggleBuyerOther(){
-  buyerOther.style.display=buyerSelect.value==="OTHER"?"block":"none";
-}
-function fillFarmerMobile(){
- farmerMobile.value=farmerSelect.value==="OTHER"?"91":(FARMER_PHONE[farmerSelect.value]||"91");
-}
-function fillBuyerMobile(){
- buyerMobile.value=buyerSelect.value==="OTHER"?"91":(BUYER_PHONE[buyerSelect.value]||"91");
-}
+function toggleFarmerOther(){ document.getElementById("farmerOther").style.display=document.getElementById("farmerSelect").value==="OTHER"?"block":"none"; }
+function toggleBuyerOther(){ document.getElementById("buyerOther").style.display=document.getElementById("buyerSelect").value==="OTHER"?"block":"none"; }
+function fillFarmerMobile(){ document.getElementById("farmerMobile").value=document.getElementById("farmerSelect").value==="OTHER"?"91":(FARMER_PHONE[document.getElementById("farmerSelect").value]||"91"); }
+function fillBuyerMobile(){ document.getElementById("buyerMobile").value=document.getElementById("buyerSelect").value==="OTHER"?"91":(BUYER_PHONE[document.getElementById("buyerSelect").value]||"91"); }
 
 function vegSelect(){
   return `<select class="veg" onchange="toggleVegOther(this)">
@@ -685,8 +310,7 @@ function vegSelect(){
 }
 
 function toggleVegOther(sel){
-  sel.parentElement.querySelector(".other").style.display=
-    sel.value==="OTHER"?"block":"none";
+  sel.parentElement.querySelector(".other").style.display=sel.value==="OTHER"?"block":"none";
 }
 
 function addSellerItem(){
@@ -696,11 +320,9 @@ function addSellerItem(){
     ${vegSelect()}
     <input class="other" placeholder="શાકનું નામ">
     <input class="price" placeholder="ભાવ ₹">
-    ${MODE==="normal"
-      ? `<input class="price-to" placeholder="થી">`
-      : `<input class="qty" placeholder="વજન">`}
+    ${MODE==="normal" ? `<input class="price-to" placeholder="થી ₹">` : `<input class="qty" placeholder="વજન">`}
   `;
-  sellerItems.appendChild(r);
+  document.getElementById("sellerItems").appendChild(r);
 }
 
 function addBuyerItem(){
@@ -708,14 +330,14 @@ function addBuyerItem(){
   r.className="row buyer";
   r.innerHTML=`
     ${vegSelect()}
-    <input class="other" placeholder="આઇટમ">
+    <input class="other" placeholder="આઇટમ નામ">
     <input class="boxes" placeholder="બોક્સ">
     <input class="qty" placeholder="વજન">
-    <input class="price" placeholder="ભાવ">
-    <input class="comm" value="7">
-    <input class="boxrate" value="4">
-  `;
-  buyerItems.appendChild(r);
+    <input class="price" placeholder="ભાવ ₹">
+    <input class="comm" placeholder="કમિશન %" value="7">
+    <input class="boxrate" placeholder="મજૂરી ₹" value="4">
+    <div style="grid-column: span 1"></div> `;
+  document.getElementById("buyerItems").appendChild(r);
 }
 
 function getDate(){
@@ -726,13 +348,12 @@ function generate(){
   let msg="";
   if(MODE==="buyer"){
     let base=0,comm=0,box=0;
-    const buyer=buyerSelect.value==="OTHER"?buyerOther.value:buyerSelect.value;
+    const buyerSel=document.getElementById("buyerSelect");
+    const buyer=buyerSel.value==="OTHER"?document.getElementById("buyerOther").value:buyerSel.value;
     msg=`નમસ્તે ${buyer} 🙏\nતારીખ: ${getDate()}\n\n`;
 
-    buyerItems.querySelectorAll(".row").forEach(r=>{
-      const veg=r.querySelector(".veg").value==="OTHER"
-        ? r.querySelector(".other").value
-        : r.querySelector(".veg").value;
+    document.getElementById("buyerItems").querySelectorAll(".row").forEach(r=>{
+      const veg=r.querySelector(".veg").value==="OTHER"? r.querySelector(".other").value: r.querySelector(".veg").value;
       const p=+r.querySelector(".price").value;
       const q=+r.querySelector(".qty").value;
       const b=+r.querySelector(".boxes").value;
@@ -745,15 +366,14 @@ function generate(){
 ભાવ ₹${p} × ${q} = ₹${sub}\n`;
     });
 
-    const other=+otherExpense.value||0;
-    msg+=`\nમાલ: ₹${base}\nકમિશન: ₹${comm}\nમજૂરી: ₹${box}\nઅન્ય: ₹${other}\n\nકુલ: ₹${base+comm+box+other}\n\n– નીલકંઠ ફ્રૂટ એન્ડ વેજીટેબલ`;
+    const other=+document.getElementById("otherExpense").value||0;
+    msg+=`\nમાલ: ₹${base.toFixed(2)}\nકમિશન: ₹${comm.toFixed(2)}\nમજૂરી: ₹${box}\nઅન્ય: ₹${other}\n\nકુલ: ₹${(base+comm+box+other).toFixed(2)}\n\n– નીલકંઠ ફ્રૂટ એન્ડ વેજીટેબલ`;
   }else{
-    const farmer=farmerSelect.value==="OTHER"?farmerOther.value:farmerSelect.value;
+    const farmerSel=document.getElementById("farmerSelect");
+    const farmer=farmerSel.value==="OTHER"?document.getElementById("farmerOther").value:farmerSel.value;
     msg=`નમસ્તે ${farmer} 🙏\nતારીખ: ${getDate()}\n\nઆજના ભાવ:\n`;
-    sellerItems.querySelectorAll(".row").forEach(r=>{
-      const veg=r.querySelector(".veg").value==="OTHER"
-        ? r.querySelector(".other").value
-        : r.querySelector(".veg").value;
+    document.getElementById("sellerItems").querySelectorAll(".row").forEach(r=>{
+      const veg=r.querySelector(".veg").value==="OTHER"? r.querySelector(".other").value: r.querySelector(".veg").value;
       const p=r.querySelector(".price").value;
       if(!veg||!p)return;
       if(MODE==="normal"){
@@ -766,87 +386,35 @@ function generate(){
     });
     msg+=`\n– નીલકંઠ ફ્રૂટ એન્ડ વેજીટેબલ`;
   }
-  message.value=msg;
+  document.getElementById("message").value=msg;
 }
-
 
 function sendWhatsApp(){
   generate();
-
-  let phone = "";
-
-  if (MODE === "buyer") {
-    phone = buyerMobile.value.trim();
-  } else {
-    phone = farmerMobile.value.trim();
-  }
-
-  // mobile not compulsory, but WhatsApp needs a number
-  if (!phone || phone === "91") {
-    alert("મોબાઇલ નંબર દાખલ કરો");
-    return;
-  }
-
-  window.open(
-    `https://wa.me/${phone}?text=${encodeURIComponent(message.value)}`,
-    "_blank"
-  );
+  let phone = MODE === "buyer" ? document.getElementById("buyerMobile").value.trim() : document.getElementById("farmerMobile").value.trim();
+  if (!phone || phone === "91") { alert("મોબાઇલ નંબર દાખલ કરો"); return; }
+  window.open(`https://wa.me/${phone}?text=${encodeURIComponent(document.getElementById("message").value)}`, "_blank");
 }
 
+function copyText(){
+  const msg = document.getElementById("message");
+  msg.select();
+  document.execCommand("copy");
+  // alert optionally
+}
 
-function copyText(){message.select();document.execCommand("copy")}
 function clearAll(){
-  farmerSelect.value="";
-  farmerOther.value="";
-  farmerOther.style.display="none";
-  buyerSelect.value="";
-  buyerOther.value="";
-  buyerOther.style.display="none";
-  sellerItems.innerHTML="";
-  buyerItems.innerHTML="";
-  otherExpense.value=0;
-  message.value="";
-  buyerMobile.value="";
-  farmerMobile.value="";
+  document.getElementById("farmerSelect").value=""; document.getElementById("farmerOther").value=""; document.getElementById("farmerOther").style.display="none";
+  document.getElementById("buyerSelect").value=""; document.getElementById("buyerOther").value=""; document.getElementById("buyerOther").style.display="none";
+  document.getElementById("sellerItems").innerHTML=""; document.getElementById("buyerItems").innerHTML="";
+  document.getElementById("otherExpense").value=""; document.getElementById("message").value="";
+  document.getElementById("buyerMobile").value=""; document.getElementById("farmerMobile").value="";
   MODE!=="buyer" ? addSellerItem() : addBuyerItem();
 }
 
-window.addEventListener("DOMContentLoaded", autoFestival);
-
-addSellerItem();
-async function pickContact(){
-  if (!("contacts" in navigator) || !("ContactsManager" in window)) {
-    alert("Contact picker not supported on this device");
-    return;
-  }
-
-  try{
-    const contacts = await navigator.contacts.select(
-      ["name","tel"],
-      { multiple:false }
-    );
-
-    if(contacts.length){
-      const c = contacts[0];
-      if(c.tel && c.tel.length){
-        buyerMobile.value = c.tel[0].replace(/\s+/g,"");
-      }
-      if(c.name && c.name.length){
-        buyerOther.value = c.name[0];
-        buyerSelect.value = "OTHER";
-        toggleBuyerOther();
-      }
-    }
-  }catch(err){
-    console.log("Contact pick cancelled");
-  }
-}
-
-
-
+window.addEventListener("DOMContentLoaded", () => {
+  addSellerItem();
+});
 </script>
-
 </body>
 </html>
-
-
