@@ -2,7 +2,7 @@
 <html lang="gu">
 <head>
 <meta charset="UTF-8">
-<meta name="app-version" content="1.0.2">
+<meta name="app-version" content="1.0.5">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>નીલકંઠ ફ્રૂટ એન્ડ વેજીટેબલ</title>
 
@@ -29,29 +29,32 @@
 @keyframes float{ from{transform:translateY(110vh) rotate(0deg)} to{transform:translateY(-20vh) rotate(360deg)} }
 @keyframes floatSide{ from{transform:translate(-10vw,110vh) rotate(0deg)} to{transform:translate(10vw,-20vh) rotate(360deg)} }
 
+.permanent-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  color: #d1d5db;
+  font-weight: 800;
+  text-align: center;
+  white-space: nowrap;
+  opacity: 0.4;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
 /* -------- UI: APP LAYOUT -------- */
 *{box-sizing:border-box}
 body{
-  margin:0;
-  font-family:system-ui,-apple-system,"Segoe UI",Arial;
-  background:var(--bg);
-  color:var(--text);
-  height: 100dvh; 
-  overflow: hidden; 
-  display: flex;
-  justify-content: center;
+  margin:0; font-family:system-ui,-apple-system,"Segoe UI",Arial;
+  background:var(--bg); color:var(--text);
+  height: 100dvh; overflow: hidden; display: flex; justify-content: center;
 }
-
 .app{
-  position:relative;
-  z-index:1;
-  width:100%;
-  max-width:560px;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 8px;
-  gap: 8px; 
+  position:relative; z-index:1; width:100%; max-width:560px; height: 100%;
+  display: flex; flex-direction: column; padding: 8px; gap: 8px; 
 }
 
 /* Header */
@@ -62,37 +65,22 @@ body{
 
 /* Cards */
 .card{
-  background:var(--card);
-  border-radius:var(--radius);
-  padding: 10px;
-  box-shadow:0 4px 12px rgba(0,0,0,.05);
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
+  background:var(--card); border-radius:var(--radius); padding: 10px;
+  box-shadow:0 4px 12px rgba(0,0,0,.05); display: flex; flex-direction: column; flex-shrink: 0;
 }
-
 #sellerSection, #buyerSection { flex: 1 1 30%; min-height: 0; }
 .msg-card { flex: 1 1 35%; min-height: 0; }
 
 /* Scrollable Inner Containers */
-.items-container {
-  flex: 1 1 auto;
-  overflow-y: auto;
-  margin-top: 8px;
-  padding-right: 4px;
-}
+.items-container { flex: 1 1 auto; overflow-y: auto; margin-top: 8px; padding-right: 4px; }
 .items-container::-webkit-scrollbar { width: 4px; }
 .items-container::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 4px; }
 
 /* Inputs & Typography */
 label{font-size:13px;font-weight:700;margin-bottom:6px;display:block;}
-input,select,textarea,button{
-  width:100%; padding:8px 10px; font-size:14px; border-radius:8px; border:1px solid #d1d5db; outline:none; background:#fff;
-}
+input,select,textarea,button{ width:100%; padding:8px 10px; font-size:14px; border-radius:8px; border:1px solid #d1d5db; outline:none; background:#fff; }
 input:focus, select:focus, textarea:focus { border-color: var(--green); }
 textarea{ flex: 1 1 auto; resize:none; background:#fafafa; margin-top:8px;}
-
-/* Header Titles inside Cards */
 .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
 .card-header label { margin: 0; }
 
@@ -104,19 +92,16 @@ textarea{ flex: 1 1 auto; resize:none; background:#fafafa; margin-top:8px;}
 /* Basic Grids */
 .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
 .grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 4px; }
-
-/* Items Grids */
 .item-row { display: grid; gap: 6px; margin-bottom: 8px; background: #f9fafb; padding: 6px; border-radius: 8px; border: 1px solid var(--border); }
 .item-row.normal { grid-template-columns: 1.5fr 1fr 1fr; }
 .item-row.advanced { grid-template-columns: 1.5fr 1fr 1fr; }
 .item-row.buyer { grid-template-columns: 1fr 1fr 1fr 1fr; }
 .buyer-top { grid-column: span 2; }
-
-.hidden{display:none !important;}
-.other{display:none;}
+.hidden{display:none !important;} .other{display:none;}
 
 /* Buttons */
-.btn{border:none;font-weight:700; cursor: pointer;}
+.btn{border:none;font-weight:700; cursor: pointer; transition: 0.2s opacity;}
+.btn:active{opacity: 0.7;}
 .btn-small{ width: auto; padding: 4px 10px; font-size: 12px; border-radius: 6px; }
 .btn-add{background:var(--green-light);color:var(--green)}
 .btn-gen{background:var(--green);color:#fff}
@@ -127,38 +112,25 @@ textarea{ flex: 1 1 auto; resize:none; background:#fafafa; margin-top:8px;}
 
 /* Footer & Festival Switch */
 .bottom-bar { display: flex; justify-content: space-between; align-items: center; padding: 4px 10px; flex-shrink: 0; }
-.footer{ font-size:11px; color:var(--muted); display:flex; gap:8px; align-items:center;}
+.footer{ font-size:11px; color:var(--muted); display:flex; gap:8px; align-items:center; flex-wrap: wrap;}
 .festival-switch select{ width:auto; font-size:11px; padding:4px 8px; border-radius:999px; }
 
-/* 🚀 UPDATE BANNER POPUP */
-#updateBanner {
-  display: none;
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #111827;
-  color: #fff;
-  padding: 10px 16px;
-  border-radius: 999px;
-  font-size: 13px;
-  box-shadow: 0 10px 25px rgba(0,0,0,.3);
-  z-index: 9999;
-  align-items: center;
-  gap: 12px;
-  white-space: nowrap;
+/* 🔔 CUSTOM ALERT & BIG UPDATE POPUP BOX */
+.custom-alert-backdrop {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 10000;
+  display: none; justify-content: center; align-items: center; padding: 20px;
+  backdrop-filter: blur(4px);
 }
-#updateBanner button {
-  background: #22c55e;
-  border: none;
-  color: #000;
-  padding: 6px 14px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-  width: auto;
-  cursor: pointer;
+.custom-alert-box {
+  background: var(--card); border-radius: 20px; padding: 30px 20px;
+  text-align: center; width: 100%; max-width: 340px; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  animation: popIn 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28);
 }
+.custom-alert-icon { font-size: 50px; margin-bottom: 12px; }
+.custom-alert-title { font-size: 20px; font-weight: 800; color: var(--green); margin: 0 0 10px; }
+.custom-alert-msg { font-size: 14px; margin-bottom: 24px; font-weight: 500; color: var(--muted); line-height: 1.5;}
+@keyframes popIn { 0% {transform: scale(0.8); opacity: 0;} 100% {transform: scale(1); opacity: 1;} }
+
 </style>
 </head>
 
@@ -166,15 +138,15 @@ textarea{ flex: 1 1 auto; resize:none; background:#fafafa; margin-top:8px;}
   <span id="appVersion" style="display:none;"></span>
 
 <div class="emoji-bg">
-<span class="emoji bg" style="left:14%;animation-duration:38s">🍎</span> <span class="emoji bg" style="left:62%;animation-duration:27s">🍏</span> <span class="emoji bg" style="left:88%;animation-duration:41s">🍐</span> <span class="emoji bg" style="left:23%;animation-duration:33s">🍊</span> <span class="emoji bg" style="left:51%;animation-duration:45s">🍋</span> <span class="emoji bg" style="left:76%;animation-duration:29s">🍌</span> <span class="emoji bg" style="left:12%;animation-duration:36s">🍉</span> <span class="emoji bg" style="left:93%;animation-duration:40s">🍇</span> <span class="emoji bg" style="left:44%;animation-duration:31s">🍓</span> <span class="emoji bg" style="left:67%;animation-duration:43s">🫐</span> <span class="emoji bg" style="left:35%;animation-duration:26s">🍈</span> <span class="emoji bg" style="left:10%;animation-duration:40s">🍅</span> <span class="emoji bg" style="left:90%;animation-duration:32s">🍆</span> <span class="emoji bg" style="left:60%;animation-duration:25s">🥦</span> <span class="emoji bg" style="left:15%;animation-duration:34s">🥬</span> <span class="emoji bg" style="left:85%;animation-duration:41s">🥒</span> <span class="emoji bg" style="left:41%;animation-duration:35s">🌶️</span> <span class="emoji bg" style="left:58%;animation-duration:38s">🥕</span> <span class="emoji bg" style="left:18%;animation-duration:29s">🥔</span> <span class="emoji bg" style="left:81%;animation-duration:37s">🍠</span>
+  <div class="permanent-text">Developed by Pritesh Hirani<br>Hirani Tech © <span id="bgYear"></span></div>
+  <span class="emoji bg" style="left:14%;animation-duration:38s">🍎</span> <span class="emoji bg" style="left:62%;animation-duration:27s">🍏</span> <span class="emoji bg" style="left:88%;animation-duration:41s">🍐</span> <span class="emoji bg" style="left:23%;animation-duration:33s">🍊</span> <span class="emoji bg" style="left:51%;animation-duration:45s">🍋</span> <span class="emoji bg" style="left:76%;animation-duration:29s">🍌</span> <span class="emoji bg" style="left:12%;animation-duration:36s">🍉</span> <span class="emoji bg" style="left:93%;animation-duration:40s">🍇</span> <span class="emoji bg" style="left:44%;animation-duration:31s">🍓</span> <span class="emoji bg" style="left:67%;animation-duration:43s">🫐</span> <span class="emoji bg" style="left:35%;animation-duration:26s">🍈</span> <span class="emoji bg" style="left:10%;animation-duration:40s">🍅</span> <span class="emoji bg" style="left:90%;animation-duration:32s">🍆</span> <span class="emoji bg" style="left:60%;animation-duration:25s">🥦</span> <span class="emoji bg" style="left:15%;animation-duration:34s">🥬</span> <span class="emoji bg" style="left:85%;animation-duration:41s">🥒</span> <span class="emoji bg" style="left:41%;animation-duration:35s">🌶️</span> <span class="emoji bg" style="left:58%;animation-duration:38s">🥕</span> <span class="emoji bg" style="left:18%;animation-duration:29s">🥔</span> <span class="emoji bg" style="left:81%;animation-duration:37s">🍠</span>
 </div>
 
 <div class="emoji-fg">
-<span class="emoji fg" style="left:72%;animation-duration:34s;font-size:2.4rem">🫐</span> <span class="emoji fg" style="left:15%;animation-duration:42s;font-size:1.8rem">🌽</span> <span class="emoji fg" style="left:54%;animation-duration:45s;font-size:2.1rem">🧅</span> <span class="emoji fg" style="left:92%;animation-duration:26s;font-size:2.7rem">🥦</span> <span class="emoji fg" style="left:67%;animation-duration:33s;font-size:2.3rem">🥕</span> <span class="emoji fg" style="left:80%;animation-duration:44s;font-size:2.8rem">🍅</span> <span class="emoji fg" style="left:36%;animation-duration:28s;font-size:1.7rem">🌶️</span> <span class="emoji fg" style="left:95%;animation-duration:46s;font-size:3.0rem">🥬</span> <span class="emoji fg" style="left:52%;animation-duration:37s;font-size:2.2rem">🥔</span>
+  <span class="emoji fg" style="left:72%;animation-duration:34s;font-size:2.4rem">🫐</span> <span class="emoji fg" style="left:15%;animation-duration:42s;font-size:1.8rem">🌽</span> <span class="emoji fg" style="left:54%;animation-duration:45s;font-size:2.1rem">🧅</span> <span class="emoji fg" style="left:92%;animation-duration:26s;font-size:2.7rem">🥦</span> <span class="emoji fg" style="left:67%;animation-duration:33s;font-size:2.3rem">🥕</span> <span class="emoji fg" style="left:80%;animation-duration:44s;font-size:2.8rem">🍅</span> <span class="emoji fg" style="left:36%;animation-duration:28s;font-size:1.7rem">🌶️</span> <span class="emoji fg" style="left:95%;animation-duration:46s;font-size:3.0rem">🥬</span> <span class="emoji fg" style="left:52%;animation-duration:37s;font-size:2.2rem">🥔</span>
 </div>
 
 <div class="app">
-
 <div class="header">
   <h1>🥦 નીલકંઠ ફ્રૂટ એન્ડ વેજીટેબલ</h1>
   <p>ભાવ • બિલ • ખરીદદાર • WhatsApp</p>
@@ -194,27 +166,19 @@ textarea{ flex: 1 1 auto; resize:none; background:#fafafa; margin-top:8px;}
     <label>ખેડૂત અને ભાવ</label>
     <button class="btn btn-add btn-small" onclick="addSellerItem()">➕ વધુ ઉમેરો</button>
   </div>
-  
   <div class="grid-2">
     <div>
       <select id="farmerSelect" onchange="toggleFarmerOther();fillFarmerMobile()">
         <option value="">ખેડૂત પસંદ કરો</option>
-        <option>JK Hirani</option>
-        <option>Bhumi</option>
-        <option>Kumud</option>
-        <option>Dharmin</option>
-        <option>Shreeji Farm</option>
-        <option>HMV</option>
-        <option value="OTHER">અન્ય</option>
+        <option>JK Hirani</option> <option>Bhumi</option> <option>Kumud</option> <option>Dharmin</option> <option>Shreeji Farm</option> <option>HMV</option> <option value="OTHER">અન્ય</option>
       </select>
       <input id="farmerOther" class="other" placeholder="નામ લખો" style="margin-top:6px;">
     </div>
     <div style="display:flex; gap:4px; align-items:flex-start;">
       <input id="farmerMobile" placeholder="મોબાઇલ (91...)" style="flex:1;">
-      <button class="btn btn-contact" onclick="pickContact('farmer')" title="સંપર્કમાંથી પસંદ કરો">👤</button>
+      <button class="btn btn-contact" onclick="pickContact('farmer')" title="સંપર્ક પસંદ કરો">👤</button>
     </div>
   </div>
-  
   <div id="sellerItems" class="items-container"></div>
 </div>
 
@@ -223,26 +187,20 @@ textarea{ flex: 1 1 auto; resize:none; background:#fafafa; margin-top:8px;}
     <label>ખરીદદાર અને બિલ</label>
     <button class="btn btn-add btn-small" onclick="addBuyerItem()">➕ આઇટમ ઉમેરો</button>
   </div>
-  
   <div class="grid-2" style="margin-bottom: 6px;">
     <div>
       <select id="buyerSelect" onchange="toggleBuyerOther();fillBuyerMobile()">
         <option value="">ખરીદદાર પસંદ કરો</option>
-        <option>Mohan</option>
-        <option>Mansoor</option>
-        <option>Ramesh</option>
-        <option value="OTHER">અન્ય</option>
+        <option>Mohan</option> <option>Mansoor</option> <option>Ramesh</option> <option value="OTHER">અન્ય</option>
       </select>
       <input id="buyerOther" class="other" placeholder="નામ લખો" style="margin-top:6px;">
     </div>
     <div style="display:flex; gap:4px; align-items:flex-start;">
       <input id="buyerMobile" placeholder="મોબાઇલ (91...)" style="flex:1;">
-      <button class="btn btn-contact" onclick="pickContact('buyer')" title="સંપર્કમાંથી પસંદ કરો">👤</button>
+      <button class="btn btn-contact" onclick="pickContact('buyer')" title="સંપર્ક પસંદ કરો">👤</button>
     </div>
   </div>
-
   <input id="otherExpense" placeholder="અન્ય ખર્ચ (₹) અહી લખો" style="margin-bottom: 6px;">
-  
   <div id="buyerItems" class="items-container"></div>
 </div>
 
@@ -258,10 +216,12 @@ textarea{ flex: 1 1 auto; resize:none; background:#fafafa; margin-top:8px;}
 
 <div class="bottom-bar">
   <div class="footer">
-    <span>Pritesh Hirani © <span id="year"></span></span>
+    <span><strong>Pritesh Hirani</strong> | Hirani Tech © <span id="year"></span></span>
     <span style="color:#9ca3af;">• v<span id="appVer"></span></span>
+    <button onclick="manualUpdateCheck()" style="padding:2px 8px; font-size:10px; border-radius:4px; border:1px solid #d1d5db; width:auto; background:var(--card); font-weight:700; color:var(--text);">🔄 અપડેટ ચેક</button>
   </div>
-  <div class="festival-switch">
+  
+  <div class="festival-switch" style="display:none">
     <select onchange="manualFestival(this.value)">
       <option value="">Auto Theme 🎨</option>
       <option value="RepublicDay">Republic Day 🇮🇳</option>
@@ -295,51 +255,103 @@ textarea{ flex: 1 1 auto; resize:none; background:#fafafa; margin-top:8px;}
   </div>
 </div>
 
-<div id="updateBanner">
-  <span>🚀 નવું અપડેટ ઉપલબ્ધ છે!</span>
-  <button onclick="applyUpdate()">Update Now</button>
+<div id="updateModal" class="custom-alert-backdrop">
+  <div class="custom-alert-box">
+    <div class="custom-alert-icon">🚀</div>
+    <h2 class="custom-alert-title">નવું અપડેટ ઉપલબ્ધ છે!</h2>
+    <div class="custom-alert-msg">એપમાં નવા ફીચર્સ અને સુધારા ઉમેરવામાં આવ્યા છે. વધુ સારા અનુભવ માટે કૃપા કરીને એપને અત્યારે જ અપડેટ કરો.</div>
+    <button class="btn btn-gen" style="font-size: 16px; padding: 12px; border-radius: 999px;" onclick="applyUpdate()">અપડેટ કરો (Update Now)</button>
+    <button class="btn" style="background: transparent; color: var(--muted); margin-top: 10px; width: auto;" onclick="closeUpdateModal()">પછીથી (Later)</button>
+  </div>
+</div>
+
+<div id="customAlert" class="custom-alert-backdrop">
+  <div class="custom-alert-box" style="padding: 24px 20px;">
+    <div id="customAlertIcon" class="custom-alert-icon" style="font-size: 40px;">⚠️</div>
+    <div id="customAlertMsg" class="custom-alert-msg" style="color: var(--text); font-weight: 600; margin-bottom: 20px;">Message goes here</div>
+    <button class="btn btn-gen" onclick="closeAlert()" style="border-radius: 8px;">ઓકે (OK)</button>
+  </div>
 </div>
 
 </div>
 
 <script>
+// --- CUSTOM ALERT LOGIC ---
+function showAlert(msg, icon="⚠️") {
+  document.getElementById('customAlertMsg').innerText = msg;
+  document.getElementById('customAlertIcon').innerText = icon;
+  document.getElementById('customAlert').style.display = 'flex';
+}
+function closeAlert() { document.getElementById('customAlert').style.display = 'none'; }
+
+// --- BIG UPDATE MODAL LOGIC ---
+function showUpdateModal() { document.getElementById("updateModal").style.display = "flex"; }
+function closeUpdateModal() { document.getElementById("updateModal").style.display = "none"; }
+
 // --- Version & Year Logic ---
 const currentMetaVersion = document.querySelector('meta[name="app-version"]')?.getAttribute("content") || "1.0.0";
 document.getElementById("appVer").textContent = currentMetaVersion;
-document.getElementById("year").innerText = new Date().getFullYear();
+const currentYear = new Date().getFullYear();
+document.getElementById("year").innerText = currentYear;
+document.getElementById("bgYear").innerText = currentYear;
 
-// --- Update Notification Logic ---
-function showUpdateBanner() {
-  const banner = document.getElementById("updateBanner");
-  if (banner) banner.style.display = "flex";
+// --- 🛠️ SERVICE WORKER & MANUAL UPDATE LOGIC ---
+let newWorker;
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js").then(reg => {
+    reg.addEventListener("updatefound", () => {
+      newWorker = reg.installing;
+      newWorker.addEventListener("statechange", () => {
+        if (newWorker.state === "installed" && navigator.serviceWorker.controller) {
+          showUpdateModal();
+        }
+      });
+    });
+  });
+
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (!refreshing) {
+      window.location.reload();
+      refreshing = true;
+    }
+  });
 }
+
 function applyUpdate() {
-  localStorage.setItem("APP_VERSION", currentMetaVersion); 
-  document.getElementById("updateBanner").style.display = "none";
-  forceUpdate(); 
-}
-function forceUpdate() {
-  if ("serviceWorker" in navigator && navigator.serviceWorker.controller) {
-    navigator.serviceWorker.controller.postMessage("FORCE_UPDATE");
-    alert("✅ એપ અપડેટ થઈ રહી છે. કૃપા કરીને રાહ જુઓ...");
-    setTimeout(() => { location.reload(true); }, 2000);
+  closeUpdateModal();
+  localStorage.setItem("APP_VERSION", currentMetaVersion);
+  if (newWorker) {
+    showAlert("એપ અપડેટ થઈ રહી છે...", "🔄");
+    newWorker.postMessage('FORCE_UPDATE'); 
   } else {
-    localStorage.setItem("APP_VERSION", currentMetaVersion);
-    location.reload(true);
+    window.location.reload(true);
+  }
+}
+
+function manualUpdateCheck() {
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.ready.then(reg => {
+      reg.update().then(() => {
+        if (!reg.waiting && !reg.installing) {
+          showAlert("તમારી એપ પહેલાથી જ લેટેસ્ટ છે!", "✅");
+        }
+      }).catch(err => {
+        showAlert("અપડેટ ચેક કરવામાં ભૂલ! ઇન્ટરનેટ તપાસો.", "📶");
+      });
+    });
+  } else {
+    window.location.reload(true);
   }
 }
 
 // --- 📱 SMART PHONE CLEANER LOGIC ---
 function normalizePhone(phone) {
   if (!phone) return "";
-  // Step 1: Remove all non-numeric characters (space, +, -, brackets)
   let num = phone.replace(/\D/g, ''); 
-  
-  // Step 2: Fix formats
-  if (num.startsWith('00')) num = num.substring(2); // Remove 00
-  if (num.length === 10) num = '91' + num; // Add 91 if it's 10 digits
-  if (num.length === 11 && num.startsWith('0')) num = '91' + num.substring(1); // Turn 09876... into 919876...
-  
+  if (num.startsWith('00')) num = num.substring(2); 
+  if (num.length === 10) num = '91' + num; 
+  if (num.length === 11 && num.startsWith('0')) num = '91' + num.substring(1); 
   return num;
 }
 
@@ -347,7 +359,7 @@ function normalizePhone(phone) {
 async function pickContact(type) {
   const supported = ('contacts' in navigator && 'ContactsManager' in window);
   if (!supported) {
-    alert("તમારા મોબાઈલ/બ્રાઉઝરમાં આ સુવિધા ઉપલબ્ધ નથી. કૃપા કરીને નંબર જાતે લખો.");
+    showAlert("તમારા મોબાઈલ/બ્રાઉઝરમાં આ સુવિધા ઉપલબ્ધ નથી. કૃપા કરીને નંબર જાતે લખો.", "📱");
     return;
   }
   
@@ -359,30 +371,23 @@ async function pickContact(type) {
       const contact = contacts[0];
       let name = contact.name ? contact.name[0] : "";
       let rawPhone = contact.tel ? contact.tel[0] : "";
-      
       let cleanPhone = normalizePhone(rawPhone);
 
       if (type === 'farmer') {
-        document.getElementById('farmerSelect').value = "OTHER";
-        toggleFarmerOther();
-        document.getElementById('farmerOther').value = name;
-        document.getElementById('farmerMobile').value = cleanPhone;
+        document.getElementById('farmerSelect').value = "OTHER"; toggleFarmerOther();
+        document.getElementById('farmerOther').value = name; document.getElementById('farmerMobile').value = cleanPhone;
       } else if (type === 'buyer') {
-        document.getElementById('buyerSelect').value = "OTHER";
-        toggleBuyerOther();
-        document.getElementById('buyerOther').value = name;
-        document.getElementById('buyerMobile').value = cleanPhone;
+        document.getElementById('buyerSelect').value = "OTHER"; toggleBuyerOther();
+        document.getElementById('buyerOther').value = name; document.getElementById('buyerMobile').value = cleanPhone;
       }
     }
-  } catch (ex) {
-    console.error("Contact picking cancelled or failed.", ex);
-  }
+  } catch (ex) { console.error("Contact picking cancelled.", ex); }
 }
 
 let MODE="normal";
 let MANUAL_THEME = false;
 
-/* 🎉 FESTIVAL THEMES LOGIC */
+/* 🎉 FULL FESTIVAL THEMES LOGIC */
 const THEMES={
   Default:{ green:"#1f7a3f", bg:"#f4f6f8", emoji:["🥦","🥕","🥔","🧅","🧄","🥒","🍆","🌶️","🫑","🌽","🥬","🥗","🍠","🫛","🫘", "🍎","🍏","🍐","🍊","🍋","🍌","🍉","🍇","🍓","🫐","🍒","🍑","🥭","🍍","🥝","🍅","🍈","🍋‍🟩","🥥","🫒","🥑","🍄"], message:"" },
   RepublicDay:{ green:"#0f172a", bg:"#eff6ff", emoji:["🇮🇳","🪷","🕊️"], message:"🇮🇳 Happy Republic Day 🇮🇳" },
@@ -415,21 +420,16 @@ const THEMES={
 
 function applyTheme(t){
   const th = THEMES[t] || THEMES.Default;
-  document.documentElement.style.setProperty("--green", th.green);
-  document.documentElement.style.setProperty("--bg", th.bg);
-
+  document.documentElement.style.setProperty("--green", th.green); document.documentElement.style.setProperty("--bg", th.bg);
   document.querySelectorAll(".emoji-bg .emoji:not(.permanent)").forEach((e,i)=>{ e.textContent = th.emoji[i % th.emoji.length]; });
   document.querySelectorAll(".emoji-fg .emoji:not(.permanent)").forEach((e,i)=>{ e.textContent = th.emoji[i % th.emoji.length]; });
-
   const msgBox = document.getElementById("festivalMessage");
-  if (th.message) { msgBox.textContent = th.message; msgBox.style.display = "block"; } 
-  else { msgBox.style.display = "none"; }
+  if (th.message) { msgBox.textContent = th.message; msgBox.style.display = "block"; } else { msgBox.style.display = "none"; }
 }
 
 function autoFestival(){
   if (MANUAL_THEME) return;
   const d = new Date(); const m = d.getMonth() + 1; const day = d.getDate();
-
   if (m === 1 && day >= 20 && day <= 30) applyTheme("RepublicDay");
   else if (m === 8 && day >= 1 && day <=15 ) applyTheme("IndependenceDay");
   else if (m === 10 && day === 2) applyTheme("GandhiJayanti");
@@ -437,8 +437,8 @@ function autoFestival(){
   else if (m === 1 && day >= 15 && day <= 16) applyTheme("Lohri");
   else if (m === 1 && day >= 16 && day <= 17) applyTheme("Pongal");
   else if (m === 2 && day >= 1 && day <= 5) applyTheme("VasantPanchami");
-  else if (m === 2 && day >= 18 && day <= 20) applyTheme("Shivratri");
-  else if (m === 3 && day >= 24 && day <= 25) applyTheme("Holi");
+  else if (m === 2 && day >= 18 && day <= 25) applyTheme("Shivratri");
+  else if (m === 3 && day >= 2 && day <= 20) applyTheme("Holi");
   else if (m === 4 && day >= 1 && day <= 10) applyTheme("RamNavami");
   else if (m === 4 && day >= 14 && day <= 16) applyTheme("HanumanJayanti");
   else if (m === 4 && day >= 1 && day <= 5) applyTheme("Ugadi");
@@ -459,10 +459,7 @@ function autoFestival(){
   else applyTheme("Default");
 }
 
-function manualFestival(v){
-  if (!v) { MANUAL_THEME = false; autoFestival(); } 
-  else { MANUAL_THEME = true; applyTheme(v); }
-}
+function manualFestival(v){ if (!v) { MANUAL_THEME = false; autoFestival(); } else { MANUAL_THEME = true; applyTheme(v); } }
 
 const VEGS=["ટામેટા","મરચાં","બટાકા","ડુંગળી","કાકડી","ગાજર","રીંગણ","બાજરીયા રીંગણ","પાલક","દૂધી","પેતરગાલા"];
 function emoji(v){ return {"ટામેટા":"🍅","મરચાં":"🌶️","બટાકા":"🥔","ડુંગળી":"🧅","કાકડી":"🥒","ગાજર":"🥕","રીંગણ":"🍆","બાજરીયા રીંગણ":"🍆","પાલક":"🥬","દૂધી":"🥒","પેતરગાલા":"🎃"}[v]||"🥬"; }
@@ -485,43 +482,25 @@ function fillBuyerMobile(){ document.getElementById("buyerMobile").value=documen
 
 function vegSelect(){
   return `<select class="veg" onchange="toggleVegOther(this)">
-    <option value="">શાક પસંદ કરો</option>
-    ${VEGS.map(v=>`<option>${v}</option>`).join("")}
-    <option value="OTHER">અન્ય લખો</option>
+    <option value="">શાક પસંદ કરો</option> ${VEGS.map(v=>`<option>${v}</option>`).join("")} <option value="OTHER">અન્ય લખો</option>
   </select>`;
 }
 function toggleVegOther(sel){ sel.parentElement.querySelector(".other").style.display=sel.value==="OTHER"?"block":"none"; }
 
-/* Adds Seller Items neatly */
 function addSellerItem(){
-  const r=document.createElement("div");
-  r.className="item-row "+(MODE==="advanced"?"advanced":"normal");
-  r.innerHTML=`
-    <div>
-      ${vegSelect()}
-      <input class="other" placeholder="શાકનું નામ" style="margin-top:4px;">
-    </div>
-    <input class="price" placeholder="ભાવ ₹">
-    ${MODE==="normal" ? `<input class="price-to" placeholder="થી ₹">` : `<input class="qty" placeholder="વજન (કિલો)">`}
-  `;
+  const r=document.createElement("div"); r.className="item-row "+(MODE==="advanced"?"advanced":"normal");
+  r.innerHTML=`<div>${vegSelect()}<input class="other" placeholder="શાકનું નામ" style="margin-top:4px;"></div>
+    <input class="price" type="number" placeholder="ભાવ ₹">
+    ${MODE==="normal" ? `<input class="price-to" type="number" placeholder="થી ₹">` : `<input class="qty" type="number" placeholder="વજન (કિલો)">`}`;
   document.getElementById("sellerItems").appendChild(r);
 }
 
-/* Adds Buyer Items in a clean 2-row block */
 function addBuyerItem(){
-  const r=document.createElement("div");
-  r.className="item-row buyer";
-  r.innerHTML=`
-    <div class="buyer-top">
-      ${vegSelect()}
-      <input class="other" placeholder="શાકનું નામ" style="margin-top:4px;">
-    </div>
-    <div class="buyer-top"><input class="boxes" placeholder="બોક્સ નંગ"></div>
-    <input class="qty" placeholder="વજન">
-    <input class="price" placeholder="ભાવ ₹">
-    <input class="comm" placeholder="કમિશન %" value="7">
-    <input class="boxrate" placeholder="મજૂરી ₹" value="4">
-  `;
+  const r=document.createElement("div"); r.className="item-row buyer";
+  r.innerHTML=`<div class="buyer-top">${vegSelect()}<input class="other" placeholder="શાકનું નામ" style="margin-top:4px;"></div>
+    <div class="buyer-top"><input class="boxes" type="number" placeholder="બોક્સ નંગ"></div>
+    <input class="qty" type="number" placeholder="વજન"> <input class="price" type="number" placeholder="ભાવ ₹">
+    <input class="comm" type="number" placeholder="કમિશન %" value="7"> <input class="boxrate" type="number" placeholder="મજૂરી ₹" value="4">`;
   document.getElementById("buyerItems").appendChild(r);
 }
 
@@ -544,7 +523,6 @@ function generate(){
       const sub=p*q; base+=sub; comm+=sub*(c/100); box+=b*br;
       msg+=`${emoji(veg)} ${veg}\nભાવ ₹${p} × ${q} = ₹${sub}\n`;
     });
-
     const other=+document.getElementById("otherExpense").value||0;
     msg+=`\nમાલ: ₹${Math.round(base)}\nકમિશન: ₹${Math.round(comm)}\nમજૂરી: ₹${box}\nઅન્ય: ₹${other}\n\nકુલ બિલ: ₹${Math.round(base+comm+box+other)}\n\n– નીલકંઠ ફ્રૂટ એન્ડ વેજીટેબલ`;
   }else{
@@ -556,11 +534,9 @@ function generate(){
       const p=r.querySelector(".price").value;
       if(!veg||!p)return;
       if(MODE==="normal"){
-        const p2=r.querySelector(".price-to").value;
-        msg+=`${emoji(veg)} ${veg} : ₹${p}${p2?` - ₹${p2}`:""}\n`;
+        const p2=r.querySelector(".price-to").value; msg+=`${emoji(veg)} ${veg} : ₹${p}${p2?` - ₹${p2}`:""}\n`;
       }else{
-        const q=r.querySelector(".qty").value;
-        msg+=`${emoji(veg)} ${veg} : ₹${p} × ${q} = ₹${p*q}\n`;
+        const q=r.querySelector(".qty").value; msg+=`${emoji(veg)} ${veg} : ₹${p} × ${q} = ₹${p*q}\n`;
       }
     });
     msg+=`\n– નીલકંઠ ફ્રૂટ એન્ડ વેજીટેબલ`;
@@ -571,19 +547,21 @@ function generate(){
 function sendWhatsApp(){
   generate();
   let rawPhone = MODE === "buyer" ? document.getElementById("buyerMobile").value.trim() : document.getElementById("farmerMobile").value.trim();
-  
-  // Clean phone right before sending!
   let phone = normalizePhone(rawPhone);
   
   if (!phone || phone.length < 10) { 
-    alert("કૃપા કરીને સાચો મોબાઇલ નંબર દાખલ કરો."); 
+    showAlert("કૃપા કરીને સાચો મોબાઇલ નંબર દાખલ કરો.", "📱"); 
     return; 
   }
-  
   window.open(`https://wa.me/${phone}?text=${encodeURIComponent(document.getElementById("message").value)}`, "_blank");
 }
 
-function copyText(){ document.getElementById("message").select(); document.execCommand("copy"); }
+function copyText(){ 
+  const msgText = document.getElementById("message").value;
+  if(!msgText) { showAlert("કોપી કરવા માટે કોઈ મેસેજ નથી!", "⚠️"); return; }
+  document.getElementById("message").select(); document.execCommand("copy"); 
+  showAlert("મેસેજ કૉપી થઈ ગયો છે!", "✅");
+}
 
 function clearAll(){
   document.getElementById("farmerSelect").value=""; document.getElementById("farmerOther").value=""; document.getElementById("farmerOther").style.display="none";
@@ -594,21 +572,13 @@ function clearAll(){
   MODE!=="buyer" ? addSellerItem() : addBuyerItem();
 }
 
-// Service Worker Registration
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js")
-    .then(() => console.log("Service Worker Registered"))
-    .catch(err => console.log("SW failed", err));
-}
-
 window.addEventListener("DOMContentLoaded", () => {
   autoFestival();
   addSellerItem();
   
-  // Checking for Version Updates
   const savedVersion = localStorage.getItem("APP_VERSION");
   if (currentMetaVersion && savedVersion && currentMetaVersion !== savedVersion) {
-    showUpdateBanner(); 
+    showUpdateModal(); 
   } else if (!savedVersion) {
     localStorage.setItem("APP_VERSION", currentMetaVersion); 
   }
